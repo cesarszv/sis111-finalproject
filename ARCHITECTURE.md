@@ -32,42 +32,20 @@ Por esa razón:
 | Operador `% 10` | Extrae el último dígito de un número. |
 | División `/ 10` | Elimina el último dígito ya procesado. |
 | Funciones | Separan cada responsabilidad del programa. |
-| Headers y sources | Organizan prototipos e implementaciones por propósito. |
+| Funciones | Organizan la lógica por responsabilidad dentro de un solo archivo. |
 
-La diapositiva `leccion10_modularidad.pdf` recomienda agrupar el código por propósito y separar los prototipos de las implementaciones. Esta base sigue ese criterio.
+El código mantiene cada responsabilidad en una función clara. Para esta entrega, el profesor pidió conservar toda la implementación en un solo archivo fuente.
 
-## 4. Separación por módulos
+## 4. Organización del archivo
 
-### `main.cpp`
+### `codigo.cpp`
 
-Solo coordina el programa:
+Contiene todo el programa:
 
-1. Muestra el menú.
-2. Lee la opción.
-3. Inicia una partida o muestra instrucciones.
-4. Termina cuando el jugador elige salir.
-
-### `juego.h` y `juego.cpp`
-
-Contienen la lógica general de la experiencia:
-
-- Menú.
-- Instrucciones.
-- Dificultad.
-- Cantidad de intentos.
-- Elección del código secreto.
-- Puntaje.
-- Ciclo principal de la partida.
-
-### `logica_digitos.h` y `logica_digitos.cpp`
-
-Contienen operaciones numéricas reutilizables:
-
-- Verificar si un número tiene 3 dígitos.
-- Verificar si un dígito existe dentro de un número.
-- Detectar dígitos repetidos.
-- Contar dígitos bien ubicados.
-- Contar dígitos existentes, pero mal ubicados.
+1. Funciones para validar y comparar dígitos.
+2. Funciones para leer entradas y mostrar el menú.
+3. Funciones para controlar una partida.
+4. La función `main`, que repite el menú hasta que el jugador elige salir.
 
 ## 5. Flujo principal
 
@@ -139,14 +117,7 @@ Estado: pendiente.
 
 Después de descubrir el código, se puede pedir una clave transformada. La ampliación más alineada con la clase del 28 de abril es intercalar dígitos pares e impares.
 
-Conviene implementarla en archivos propios:
-
-```text
-desbloqueo.h
-desbloqueo.cpp
-```
-
-Funciones sugeridas:
+Si se implementa, debe agregarse dentro de `codigo.cpp`. Funciones sugeridas:
 
 ```cpp
 void ordenarAscendente(int &numero);

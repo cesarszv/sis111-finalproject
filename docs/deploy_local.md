@@ -8,17 +8,13 @@ El proyecto es una aplicación de consola escrita en C++. No necesita instalar b
 
 ## 2. Archivos necesarios
 
-La compilación utiliza estos archivos:
+La compilación utiliza un solo archivo:
 
 ```text
-main.cpp
-juego.h
-juego.cpp
-logica_digitos.h
-logica_digitos.cpp
+codigo.cpp
 ```
 
-Los archivos `.h` contienen los prototipos de las funciones. Los archivos `.cpp` contienen las implementaciones.
+Todas las funciones del juego están implementadas dentro de `codigo.cpp`.
 
 ## 3. Requisitos
 
@@ -57,7 +53,7 @@ La carpeta `build/` evita mezclar el archivo compilado con el código fuente. Ta
 Ejecutar:
 
 ```bash
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp juego.cpp logica_digitos.cpp -o build/codigo_secreto
+g++ -std=c++17 -Wall -Wextra -pedantic codigo.cpp -o build/codigo_secreto
 ```
 
 ### Significado del comando
@@ -69,7 +65,7 @@ g++ -std=c++17 -Wall -Wextra -pedantic main.cpp juego.cpp logica_digitos.cpp -o 
 | `-Wall` | Activa advertencias comunes. |
 | `-Wextra` | Activa advertencias adicionales. |
 | `-pedantic` | Comprueba el cumplimiento estricto del estándar. |
-| `main.cpp juego.cpp logica_digitos.cpp` | Indica los archivos fuente que se deben compilar juntos. |
+| `codigo.cpp` | Indica el único archivo fuente que se debe compilar. |
 | `-o build/codigo_secreto` | Guarda el ejecutable dentro de `build/`. |
 
 Si la compilación termina sin mensajes de error, el ejecutable fue creado correctamente.
@@ -94,10 +90,10 @@ Seleccione una opcion:
 
 ## 8. Compilar y ejecutar nuevamente
 
-Después de modificar cualquier archivo `.cpp` o `.h`, volver a compilar antes de ejecutar:
+Después de modificar `codigo.cpp`, volver a compilar antes de ejecutar:
 
 ```bash
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp juego.cpp logica_digitos.cpp -o build/codigo_secreto
+g++ -std=c++17 -Wall -Wextra -pedantic codigo.cpp -o build/codigo_secreto
 ./build/codigo_secreto
 ```
 
@@ -155,7 +151,7 @@ flowchart TD
     A([Inicio]) --> B[Abrir terminal]
     B --> C[Ingresar a la carpeta del proyecto]
     C --> D[Crear carpeta build]
-    D --> E[Compilar los archivos cpp con g++]
+    D --> E[Compilar codigo.cpp con g++]
     E --> F{¿Existen errores?}
     F -- Sí --> G[Leer error y corregir código o entorno]
     G --> E
@@ -168,6 +164,6 @@ flowchart TD
 ```bash
 cd /home/cszv/Documents/UCB-LIA/sis111/assignments/final_project
 mkdir -p build
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp juego.cpp logica_digitos.cpp -o build/codigo_secreto
+g++ -std=c++17 -Wall -Wextra -pedantic codigo.cpp -o build/codigo_secreto
 ./build/codigo_secreto
 ```

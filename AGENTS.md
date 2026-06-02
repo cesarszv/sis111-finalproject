@@ -18,6 +18,6 @@ al estar en introduccion el profesor exige usar pura logica y bucles, tambien po
 
 ## AI Collaboration Style
 
-- Usa lenguaje simple, humano y tecnicamente valido.
+- Siempre usa lenguaje simple, humano y tecnicamente valido.
 - Explica las cosas completas y desde cero.
 - Asume que los lectores son devs juniors.
