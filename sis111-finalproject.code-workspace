@@ -7,5 +7,7 @@
 			"path": "../../lessons"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "final_project"
+	}
 }

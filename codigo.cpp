@@ -3,6 +3,42 @@
 
 using namespace std;
 
+bool tieneTresDigitos(int numero);
+bool existeDigito(int numero, int digitoBuscado);
+bool tieneDigitosRepetidos(int numero);
+bool esIntentoValido(int numero);
+int contarDigitosBienUbicados(int codigoSecreto, int intento);
+int contarDigitosMalUbicados(int codigoSecreto, int intento);
+int leerEntero();
+void mostrarMenu();
+int pedirOpcionMenu();
+void mostrarInstrucciones();
+int pedirDificultad();
+int obtenerCantidadIntentos(int dificultad);
+int elegirCodigoSecreto(int dificultad, int numeroPartida);
+int pedirIntento();
+int calcularPuntaje(int intentosRestantes, int dificultad);
+void jugar(int numeroPartida);
+
+int main() {
+    int opcion = 0;
+    int numeroPartida = 1;
+
+    do {
+        mostrarMenu();
+        opcion = pedirOpcionMenu();
+
+        if (opcion == 1) {
+            jugar(numeroPartida);
+            numeroPartida++;
+        } else if (opcion == 2) {
+            mostrarInstrucciones();
+        }
+    } while (opcion != 3);
+
+    return 0;
+}
+
 bool tieneTresDigitos(int numero) {
     return numero >= 100 && numero <= 999;
 }
@@ -231,23 +267,4 @@ void jugar(int numeroPartida) {
         cout << "\nNo quedan intentos. El codigo secreto era: ";
         cout << codigoSecreto << "\n";
     }
-}
-
-int main() {
-    int opcion = 0;
-    int numeroPartida = 1;
-
-    do {
-        mostrarMenu();
-        opcion = pedirOpcionMenu();
-
-        if (opcion == 1) {
-            jugar(numeroPartida);
-            numeroPartida++;
-        } else if (opcion == 2) {
-            mostrarInstrucciones();
-        }
-    } while (opcion != 3);
-
-    return 0;
 }

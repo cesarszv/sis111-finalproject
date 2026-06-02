@@ -4,13 +4,7 @@ proyecto final de introduccion a la programacion
 
 # Metodologia Usada
 
-codigo.cpp{
-aqui se encontrara el codigo del ejercicio resuelto
-}
 
-codigo.md{
-aqui se encontrara la explicacion, logica y justificacion del codigo, el razonamiento y un diagrama de flujo en mermaid.js
-}
 
 # Reglas
 
