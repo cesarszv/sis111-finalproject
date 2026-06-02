@@ -28,17 +28,20 @@ No usa arrays, clases ni bibliotecas adicionales. Los códigos predefinidos se a
 | Archivo | Responsabilidad |
 | :--- | :--- |
 | `main.cpp` | Inicia el programa y controla el menú principal. |
-| `main.md` | Explica a profundidad el flujo de `main.cpp`. |
+| `docs/code/main.md` | Explica a profundidad el flujo de `main.cpp`. |
 | `juego.h` | Declara las funciones relacionadas con la partida. |
 | `juego.cpp` | Implementa el menú, las dificultades, el puntaje y el ciclo del juego. |
-| `juego.md` | Explica el header, las funciones y el flujo completo de una partida. |
+| `docs/code/juego.md` | Explica el header, las funciones y el flujo completo de una partida. |
 | `logica_digitos.h` | Declara las operaciones reutilizables con dígitos. |
 | `logica_digitos.cpp` | Implementa validaciones y conteos con `% 10` y `/ 10`. |
-| `logica_digitos.md` | Explica la lógica numérica paso a paso y sus diagramas. |
+| `docs/code/logica_digitos.md` | Explica la lógica numérica paso a paso y sus diagramas. |
 | `docs/arquitectura.md` | Explica la lógica, la modularidad y el plan de ampliación. |
+| `docs/deploy_local.md` | Explica cómo compilar y ejecutar el proyecto localmente. |
 | `docs/despliegue_gratis.md` | Investiga cómo publicar una demo gratuita en internet. |
 
 ## Compilar
+
+La guía detallada se encuentra en [`docs/deploy_local.md`](docs/deploy_local.md).
 
 Desde esta carpeta:
 
