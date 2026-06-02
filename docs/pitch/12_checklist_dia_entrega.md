@@ -5,24 +5,25 @@
 - [ ] Completar el nombre oficial en la hoja.
 - [ ] Imprimir una sola hoja, sin carátula.
 - [ ] Compilar `codigo.cpp`.
-- [ ] Ejecutar la demo recomendada.
-- [ ] Resolver un simulacro completo.
+- [ ] Ejecutar la demo con `527`.
+- [ ] Probar el comando `0`.
+- [ ] Resolver un simulacro.
 - [ ] Cargar el equipo.
 - [ ] Guardar cargador.
 
 ## Antes de salir
 
-- [ ] Llevar la hoja impresa.
-- [ ] Llevar el equipo.
+- [ ] Llevar hoja impresa.
+- [ ] Llevar equipo.
 - [ ] Llevar cargador.
-- [ ] Confirmar la hora.
+- [ ] Confirmar hora.
 - [ ] Salir con anticipación.
 
-## Antes de ingresar al aula
+## Antes de ingresar
 
-- [ ] Abrir la carpeta del proyecto.
+- [ ] Abrir carpeta del proyecto.
 - [ ] Abrir `codigo.cpp`.
-- [ ] Abrir una terminal.
+- [ ] Abrir terminal.
 - [ ] Ejecutar:
 
 ```bash
@@ -30,24 +31,24 @@ g++ -std=c++17 -Wall -Wextra -pedantic codigo.cpp -o build/codigo_secreto
 ```
 
 - [ ] Verificar que no existan errores.
-- [ ] Cerrar ventanas innecesarias.
 - [ ] Leer [`11_resumen_ultima_hora.md`](11_resumen_ultima_hora.md).
 
 ## Durante la exposición
 
-- [ ] Explicar primero el objetivo.
-- [ ] Mostrar `main`.
-- [ ] Explicar por qué usaste cada ciclo.
+- [ ] Explicar objetivo.
+- [ ] Mostrar prototipos y `main`.
 - [ ] Explicar `% 10` y `/ 10`.
-- [ ] Ejecutar una pista y una victoria.
-- [ ] Responder con ejemplos concretos.
+- [ ] Mostrar configuración de intentos.
+- [ ] Mostrar intento `572`.
+- [ ] Pedir pistas con `0`.
+- [ ] Ganar con `527`.
 
 ## Durante la modificación
 
-- [ ] Escuchar el pedido completo.
-- [ ] Repetir el pedido con tus palabras.
-- [ ] Identificar la función responsable.
-- [ ] Cambiar únicamente lo necesario.
+- [ ] Escuchar pedido completo.
+- [ ] Repetirlo con tus palabras.
+- [ ] Identificar función responsable.
+- [ ] Cambiar lo mínimo.
 - [ ] Guardar.
 - [ ] Compilar.
-- [ ] Ejecutar una prueba mínima.
+- [ ] Ejecutar prueba mínima.

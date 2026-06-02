@@ -2,14 +2,11 @@
 
 ## Proyecto
 
-**Código Secreto**: juego de consola para descubrir un número oculto de tres dígitos diferentes.
+Código Secreto es un juego de consola para descubrir un número oculto de tres dígitos diferentes.
 
-Pistas:
+El jugador elige cuántos intentos tendrá y escribe `0` cuando quiere pedir una pista.
 
-1. Dígitos correctos y bien ubicados.
-2. Dígitos correctos pero mal ubicados.
-
-## Fórmulas esenciales
+## Fórmulas
 
 ```cpp
 digito = numero % 10; // extraer último dígito
@@ -21,20 +18,20 @@ malUbicados = existentes - bienUbicados;
 ```
 
 ```cpp
-puntaje = dificultad * 100 + intentosRestantes * 50;
+puntaje = 1100 - intentosUsados * 100;
 ```
 
 ```cpp
-selector = (dificultad + numeroPartida) % 5;
+selector = numeroPartida % 5;
 ```
 
 ## Ciclos
 
-| Ciclo | Cuándo usarlo | Uso en el proyecto |
-| :--- | :--- | :--- |
-| `for` | Conozco la cantidad exacta. | Comparar 3 posiciones. |
-| `while` | Repito según una condición. | Partida y búsqueda de dígitos. |
-| `do while` | Debe ejecutarse al menos una vez. | Menú principal. |
+| Ciclo | Uso |
+| :--- | :--- |
+| `for` | Comparar exactamente tres posiciones. |
+| `while` | Repetir según condición. |
+| `do while` | Mostrar menú al menos una vez. |
 
 ## Operadores
 
@@ -43,78 +40,67 @@ selector = (dificultad + numeroPartida) % 5;
 | `=` | Asignar. |
 | `==` | Comparar. |
 | `!=` | Diferente. |
-| `&&` | Ambas condiciones deben cumplirse. |
-| `||` | Basta con una condición verdadera. |
-| `%` | Residuo de una división. |
+| `&&` | Ambas condiciones. |
+| `||` | Al menos una condición. |
+| `%` | Residuo. |
 
-## Funciones clave
+## Funciones esenciales
 
 | Función | Qué hace |
 | :--- | :--- |
-| `tieneTresDigitos` | Valida el rango `100` a `999`. |
-| `existeDigito` | Busca un dígito dentro de un número. |
-| `tieneDigitosRepetidos` | Detecta repeticiones. |
-| `esIntentoValido` | Combina validaciones. |
-| `contarDigitosBienUbicados` | Compara las 3 posiciones. |
-| `contarDigitosMalUbicados` | Cuenta existentes y resta bien ubicados. |
-| `jugar` | Coordina una partida completa. |
+| `esCodigoValido` | Exige tres dígitos diferentes. |
+| `existeDigito` | Busca un dígito. |
+| `contarDigitosBienUbicados` | Compara posiciones. |
+| `contarDigitosMalUbicados` | Resta coincidencias bien ubicadas. |
+| `contarDigitosPares` | Cuenta pares. |
+| `sumarDigitos` | Suma dígitos. |
+| `mostrarPista` | Ejecuta el tipo de pista elegido. |
+| `jugar` | Coordina una partida. |
 
-## Ejemplo obligatorio
+## Comando
 
 ```text
-Código secreto: 864
-Intento:        468
+0 = abrir menú de pistas
 ```
 
-Resultado:
+No consume intentos.
+
+## Ejemplo
+
+```text
+Secreto: 527
+Intento: 572
+```
 
 ```text
 Bien ubicados: 1
 Mal ubicados: 2
+Pares del secreto: 1
+Suma: 14
+Mayor que 500: sí
 ```
 
-## Prototipo, llamada y definición
+## Respuestas rápidas
 
-```cpp
-int calcularPuntaje(int intentosRestantes, int dificultad); // prototipo
-puntaje = calcularPuntaje(9, 1);                            // llamada
+**¿Por qué `0`?**
 
-int calcularPuntaje(int intentosRestantes, int dificultad) { // definición
-    return dificultad * 100 + intentosRestantes * 50;
-}
-```
+No se confunde con un código válido de tres dígitos.
 
-## Si te piden modificar algo
+**¿Por qué puntaje según usados?**
 
-1. Repetir el requerimiento.
-2. Identificar la función responsable.
-3. Cambiar lo mínimo.
-4. Compilar.
-5. Probar.
+El jugador configura el máximo. Premiar restantes sería injusto.
+
+**¿Por qué `mostrarPista` devuelve `bool`?**
+
+Para contar solamente pistas realmente mostradas.
+
+**¿Por qué no arrays?**
+
+Proceso números matemáticamente con `% 10` y `/ 10`.
+
+## Compilar
 
 ```bash
 g++ -std=c++17 -Wall -Wextra -pedantic codigo.cpp -o build/codigo_secreto
 ./build/codigo_secreto
 ```
-
-## Respuestas cortas importantes
-
-**¿Por qué no usaste arrays?**
-
-Porque el proyecto exige lógica básica. Proceso dígitos con `% 10` y `/ 10`.
-
-**¿Por qué no usaste números aleatorios?**
-
-Para evitar bibliotecas adicionales. Alterno cinco códigos predefinidos.
-
-**¿Por qué restas bien ubicados?**
-
-Porque un dígito bien ubicado también existe. Debo restarlo para no contarlo dos veces.
-
-**¿Por qué puedes dividir parámetros sin perder valores originales?**
-
-Porque las funciones reciben copias por valor.
-
-## Recordatorio final
-
-No respondas apresuradamente. Explica primero el objetivo, luego la condición y finalmente el resultado.

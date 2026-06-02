@@ -1,8 +1,6 @@
 # Guía para demostrar el juego
 
-## 1. Preparar la terminal
-
-Desde la carpeta del proyecto:
+## 1. Preparar terminal
 
 ```bash
 cd /home/cszv/Documents/UCB-LIA/sis111/assignments/final_project
@@ -11,157 +9,138 @@ g++ -std=c++17 -Wall -Wextra -pedantic codigo.cpp -o build/codigo_secreto
 ./build/codigo_secreto
 ```
 
-Si la compilación no muestra errores ni advertencias, inicia la demo.
-
 ## 2. Demo recomendada
 
-En la primera partida con dificultad fácil:
+En la primera partida:
 
 ```text
 numeroPartida = 1
-dificultad = 1
-selector = (1 + 1) % 5 = 2
-codigoSecreto = 864
+selector = 1 % 5 = 1
+codigoSecreto = 527
 ```
 
-Usa esta secuencia:
+Usa:
 
-| Paso | Entrada | Qué demuestra |
+| Paso | Entrada | Demuestra |
 | :--- | :--- | :--- |
 | Menú | `1` | Iniciar partida. |
-| Dificultad | `1` | Elegir fácil: 10 intentos. |
-| Intento 1 | `468` | Mostrar pistas: 1 bien ubicado y 2 mal ubicados. |
-| Intento 2 | `864` | Mostrar victoria y puntaje. |
-| Menú | `3` | Salir. |
+| Intentos | `7` | Configuración elegida por usuario. |
+| Intento | `572` | Código válido incorrecto. |
+| Comando | `0` | Abrir menú de pistas. |
+| Pista | `1` | Un dígito bien ubicado. |
+| Comando | `0` | Abrir nuevamente. |
+| Pista | `2` | Dos dígitos mal ubicados. |
+| Intento | `527` | Victoria. |
+| Menú | `3` | Salida y despedida. |
 
-## 3. Guion mientras ejecutas
+## 3. Guion
 
-> Voy a iniciar una partida en dificultad fácil. Primero ingresaré un código válido, pero incorrecto: `468`. El secreto de esta demo es `864`. Los tres dígitos existen, pero solamente el `6` está en la posición correcta. Por eso el programa debe mostrar un bien ubicado y dos mal ubicados. Después ingresaré `864` para demostrar el flujo de victoria y el puntaje.
+> Voy a elegir siete intentos. El primer código secreto es `527`. Ingreso `572`: los tres dígitos existen, pero solamente el `5` está en su posición correcta. Ahora escribo `0`, que abre el menú de pistas sin consumir intentos. Solicito primero los bien ubicados y después los mal ubicados. Finalmente ingreso `527` para demostrar la victoria.
 
-## 4. Pruebas que debes ejecutar antes de presentar
+## 4. Pruebas manuales
 
-### Prueba A: salir directamente
-
-Entrada:
+### Salir
 
 ```text
 3
 ```
 
-Resultado esperado: el programa termina sin errores.
+Debe mostrar despedida.
 
-### Prueba B: ver instrucciones
-
-Entrada:
+### Ver instrucciones
 
 ```text
 2
 3
 ```
 
-Resultado esperado: muestra instrucciones y vuelve al menú.
+Debe explicar el comando `0`.
 
-### Prueba C: opción inválida
-
-Entrada:
+### Rechazar cantidad inválida
 
 ```text
-4
-3
+1
+21
+7
 ```
 
-Resultado esperado: rechaza `4` y solicita `1`, `2` o `3`.
+Debe volver a pedir una cantidad entre `1` y `20`.
 
-### Prueba D: texto en vez de número
-
-Entrada:
-
-```text
-hola
-3
-```
-
-Resultado esperado: informa que la entrada es inválida y vuelve a pedir un entero.
-
-### Prueba E: intento con pocos dígitos
-
-Durante una partida:
+### Rechazar código corto
 
 ```text
 55
 ```
 
-Resultado esperado: rechaza el código.
+Debe explicar que se requieren exactamente tres dígitos.
 
-### Prueba F: intento repetido
-
-Durante una partida:
+### Rechazar repetición
 
 ```text
 551
 ```
 
-Resultado esperado: rechaza el código porque tiene dígitos repetidos.
+Debe explicar que los dígitos deben ser diferentes.
 
-### Prueba G: pistas
-
-Primera partida fácil:
+### Pedir pista antes del primer intento
 
 ```text
-468
+0
+1
 ```
 
-Resultado esperado:
+Debe explicar que primero necesita un intento para comparar posiciones. No debe incrementar `pistasUsadas`.
+
+### Pedir pista independiente
 
 ```text
-Digitos correctos y bien ubicados: 1
-Digitos correctos pero mal ubicados: 2
+0
+4
 ```
 
-### Prueba H: victoria
-
-Primera partida fácil:
+En la primera partida debe mostrar:
 
 ```text
-864
+Suma de los digitos del codigo secreto: 14
 ```
 
-Resultado esperado:
+### Ganar en un intento
 
 ```text
-Descubriste el codigo secreto.
-Puntaje final: 550
+527
 ```
 
-## 5. Tabla para otras primeras partidas
+Debe mostrar:
 
-| Dificultad | Valor | Primera partida: selector | Código secreto |
-| :--- | ---: | ---: | ---: |
-| Fácil | `1` | `(1 + 1) % 5 = 2` | `864` |
-| Normal | `2` | `(2 + 1) % 5 = 3` | `392` |
-| Difícil | `3` | `(3 + 1) % 5 = 4` | `615` |
+```text
+Puntaje final: 1000
+```
 
-## 6. Prueba automatizada rápida
+## 5. Pruebas automatizadas
 
-Para verificar una victoria en la primera partida fácil:
+### Victoria directa
 
 ```bash
-printf '1\n1\n864\n3\n' | ./build/codigo_secreto
+printf '1\n1\n527\n3\n' | ./build/codigo_secreto
 ```
 
-Para verificar validaciones y pistas:
+### Validaciones, pistas y victoria
 
 ```bash
-printf '1\n1\n55\n551\n468\n864\n3\n' | ./build/codigo_secreto
+printf '1\n7\n55\n551\n572\n0\n1\n0\n2\n527\n3\n' | ./build/codigo_secreto
 ```
 
-## 7. Después de una modificación presencial
+### Derrota
 
-Siempre sigue este orden:
+```bash
+printf '1\n2\n123\n456\n3\n' | ./build/codigo_secreto
+```
+
+## 6. Después de una modificación
 
 1. Guardar `codigo.cpp`.
 2. Compilar.
-3. Leer cualquier error con calma.
-4. Corregir únicamente el error indicado.
+3. Leer errores con calma.
+4. Corregir únicamente lo indicado.
 5. Volver a compilar.
-6. Ejecutar el caso mínimo que demuestra el cambio.
+6. Ejecutar un caso que demuestre el cambio.

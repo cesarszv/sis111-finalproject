@@ -1,12 +1,6 @@
 # Pseudocódigo del proyecto
 
-## 1. Qué es pseudocódigo
-
-El pseudocódigo describe la lógica con palabras y estructuras simples. No depende exactamente de la sintaxis de C++.
-
-Sirve para demostrar que entiendes el algoritmo antes de programarlo.
-
-## 2. Programa principal
+## 1. Programa principal
 
 ```text
 INICIO
@@ -14,33 +8,31 @@ INICIO
     numeroPartida = 1
 
     HACER
-        mostrar menú
-        leer opcion
+        mostrar menú principal
+        leer opción válida
 
         SI opcion == 1 ENTONCES
-            jugar una partida usando numeroPartida
+            jugar(numeroPartida)
             numeroPartida = numeroPartida + 1
         SINO SI opcion == 2 ENTONCES
             mostrar instrucciones
         FIN SI
     MIENTRAS opcion != 3
+
+    mostrar despedida
 FIN
 ```
 
-## 3. Validar un intento
+## 2. Validar un código
 
 ```text
-FUNCIÓN esIntentoValido(numero)
-    SI numero está entre 100 y 999
-       Y numero no tiene dígitos repetidos ENTONCES
-        RETORNAR verdadero
-    SINO
-        RETORNAR falso
-    FIN SI
+FUNCIÓN esCodigoValido(numero)
+    RETORNAR tieneTresDigitos(numero)
+             Y NO tieneDigitosRepetidos(numero)
 FIN FUNCIÓN
 ```
 
-## 4. Verificar si un dígito existe
+## 3. Buscar un dígito
 
 ```text
 FUNCIÓN existeDigito(numero, digitoBuscado)
@@ -59,7 +51,7 @@ FUNCIÓN existeDigito(numero, digitoBuscado)
 FIN FUNCIÓN
 ```
 
-## 5. Detectar dígitos repetidos
+## 4. Detectar dígitos repetidos
 
 ```text
 FUNCIÓN tieneDigitosRepetidos(numero)
@@ -78,7 +70,7 @@ FUNCIÓN tieneDigitosRepetidos(numero)
 FIN FUNCIÓN
 ```
 
-## 6. Contar dígitos bien ubicados
+## 5. Contar dígitos bien ubicados
 
 ```text
 FUNCIÓN contarDigitosBienUbicados(codigoSecreto, intento)
@@ -100,7 +92,7 @@ FUNCIÓN contarDigitosBienUbicados(codigoSecreto, intento)
 FIN FUNCIÓN
 ```
 
-## 7. Contar dígitos mal ubicados
+## 6. Contar dígitos mal ubicados
 
 ```text
 FUNCIÓN contarDigitosMalUbicados(codigoSecreto, intento)
@@ -121,71 +113,101 @@ FUNCIÓN contarDigitosMalUbicados(codigoSecreto, intento)
 FIN FUNCIÓN
 ```
 
-## 8. Jugar una partida
+## 7. Contar pares
 
 ```text
-PROCEDIMIENTO jugar(numeroPartida)
-    dificultad = pedir dificultad
-    cantidadIntentos = obtener cantidad de intentos según dificultad
-    codigoSecreto = elegir código secreto
-    intentosUsados = 0
-    gano = falso
+FUNCIÓN contarDigitosPares(numero)
+    cantidadPares = 0
 
-    MIENTRAS intentosUsados < cantidadIntentos Y gano == falso
-        intento = pedir un intento válido
-        intentosUsados = intentosUsados + 1
+    MIENTRAS numero > 0
+        digito = numero MOD 10
+        numero = numero DIV 10
 
-        SI intento == codigoSecreto ENTONCES
-            gano = verdadero
-        SINO
-            bienUbicados = contar dígitos bien ubicados
-            malUbicados = contar dígitos mal ubicados
-            mostrar ambas pistas
+        SI digito MOD 2 == 0 ENTONCES
+            cantidadPares = cantidadPares + 1
         FIN SI
     FIN MIENTRAS
 
-    SI gano == verdadero ENTONCES
-        intentosRestantes = cantidadIntentos - intentosUsados
-        puntaje = calcular puntaje
-        mostrar victoria y puntaje
+    RETORNAR cantidadPares
+FIN FUNCIÓN
+```
+
+## 8. Sumar dígitos
+
+```text
+FUNCIÓN sumarDigitos(numero)
+    suma = 0
+
+    MIENTRAS numero > 0
+        digito = numero MOD 10
+        numero = numero DIV 10
+        suma = suma + digito
+    FIN MIENTRAS
+
+    RETORNAR suma
+FIN FUNCIÓN
+```
+
+## 9. Mostrar pista
+
+```text
+FUNCIÓN mostrarPista(tipoPista, codigoSecreto, ultimoIntento)
+    pistaMostrada = verdadero
+
+    SI tipoPista == 1 ENTONCES
+        mostrar bien ubicados del último intento
+    SINO SI tipoPista == 2 ENTONCES
+        mostrar mal ubicados del último intento
+    SINO SI tipoPista == 3 ENTONCES
+        mostrar cantidad de pares del código secreto
+    SINO SI tipoPista == 4 ENTONCES
+        mostrar suma de dígitos del código secreto
+    SINO SI tipoPista == 5 ENTONCES
+        mostrar si el código es mayor o menor que 500
     SINO
-        mostrar derrota y código secreto
+        regresar sin mostrar pista
+        pistaMostrada = falso
     FIN SI
+
+    RETORNAR pistaMostrada
+FIN FUNCIÓN
+```
+
+Las opciones `1` y `2` verifican primero que exista un intento previo.
+
+## 10. Jugar
+
+```text
+PROCEDIMIENTO jugar(numeroPartida)
+    cantidadIntentos = pedir cantidad
+    codigoSecreto = elegir código
+    intentosUsados = 0
+    pistasUsadas = 0
+    ultimoIntento = 0
+    gano = falso
+
+    MIENTRAS intentosUsados < cantidadIntentos Y gano == falso
+        mostrar estado
+        codigoOComando = pedir código o comando
+
+        SI codigoOComando == 0 ENTONCES
+            tipoPista = pedir tipo
+
+            SI mostrarPista(...) == verdadero ENTONCES
+                pistasUsadas = pistasUsadas + 1
+            FIN SI
+        SINO
+            ultimoIntento = codigoOComando
+            intentosUsados = intentosUsados + 1
+
+            SI ultimoIntento == codigoSecreto ENTONCES
+                gano = verdadero
+            SINO
+                mostrar mensaje para continuar
+            FIN SI
+        FIN SI
+    FIN MIENTRAS
+
+    mostrar resultado final
 FIN PROCEDIMIENTO
-```
-
-## 9. Traza manual completa
-
-Primera partida en dificultad fácil:
-
-```text
-dificultad = 1
-numeroPartida = 1
-selector = (1 + 1) MOD 5
-selector = 2
-codigoSecreto = 864
-```
-
-Intento del jugador:
-
-```text
-intento = 468
-```
-
-Comparación:
-
-| Revisión | Dígito secreto | Dígito intento | Bien ubicado | Existe en secreto |
-| :--- | ---: | ---: | :--- | :--- |
-| Unidades | `4` | `8` | No | Sí |
-| Decenas | `6` | `6` | Sí | Sí |
-| Centenas | `8` | `4` | No | Sí |
-
-Resultado:
-
-```text
-bienUbicados = 1
-existentes = 3
-malUbicados = existentes - bienUbicados
-malUbicados = 3 - 1
-malUbicados = 2
 ```

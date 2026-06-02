@@ -1,78 +1,41 @@
 # Guion para explicar el proyecto
 
-## Versión corta de 30 segundos
+## Versión de 30 segundos
 
-> Mi proyecto se llama Código Secreto. Es un juego de consola en C++ donde el jugador debe adivinar un código oculto de tres dígitos diferentes. Después de cada intento incorrecto, el programa muestra cuántos dígitos están bien ubicados y cuántos existen, pero están en otra posición. Incluí tres dificultades, validación de entradas y un puntaje. Lo desarrollé con funciones, condicionales y bucles, sin arrays ni bibliotecas adicionales.
+> Mi proyecto se llama Código Secreto. Es un juego de consola en C++ donde el jugador debe adivinar un código oculto de tres dígitos diferentes. El jugador define cuántos intentos quiere tener y puede escribir `0` durante la partida para elegir una pista. Lo desarrollé con funciones, condicionales y bucles, sin arrays ni bibliotecas adicionales.
 
 ## Versión recomendada de 2 minutos
 
 > Mi proyecto se llama Código Secreto. El objetivo es descubrir un número oculto de tres dígitos diferentes antes de quedarse sin intentos.
 >
-> Primero, el programa muestra un menú con tres opciones: jugar, ver instrucciones o salir. Si el usuario elige jugar, selecciona una dificultad. La dificultad define si tiene diez, siete o cinco intentos.
+> Primero, el programa muestra un menú con tres opciones: jugar, ver instrucciones o salir. Al iniciar una partida, el jugador elige cuántos intentos desea tener, entre uno y veinte.
 >
-> Durante la partida, el jugador ingresa un código. El programa valida que tenga tres dígitos y que no repita ninguno. Si el intento no coincide con el código secreto, se muestran dos pistas: dígitos correctos y bien ubicados, y dígitos correctos pero mal ubicados.
+> Durante cada turno puede ingresar un código o escribir `0`. El cero funciona como un comando para abrir el menú de pistas. Allí puede pedir información sobre su último intento o sobre el código secreto. Pedir una pista no consume intentos.
 >
-> Para revisar los dígitos sin usar arrays, aproveché operaciones matemáticas vistas en clase. Con `% 10` extraigo el último dígito y con `/ 10` elimino ese dígito para continuar con el siguiente. Usé un ciclo `for` porque sé que debo comparar exactamente tres posiciones.
+> Para revisar dígitos sin usar arrays, utilizo `% 10` para extraer el último dígito y `/ 10` para eliminarlo. Uso `for` cuando sé que debo comparar exactamente tres posiciones y `while` cuando la repetición depende de una condición.
 >
-> Organicé todo en un solo archivo fuente, como pidió el profesor. Antes de `main` declaré los prototipos y después de `main` definí cada función. Esto permite leer primero el flujo principal y luego revisar los detalles.
+> Todo está en un solo archivo fuente. Antes de `main` declaré prototipos y después definí cada función para que el flujo principal se pueda leer primero.
 
-## Versión completa de 4 minutos
+## Orden recomendado para la demo
 
-### 1. Problema
-
-> Quería crear un juego pequeño que aplicara los temas vistos en Introducción a la Programación. Elegí un juego de deducción porque permite usar condicionales, bucles, funciones y manipulación de dígitos.
-
-### 2. Flujo principal
-
-> El programa comienza en `main`. Uso un ciclo `do while` porque el menú debe mostrarse al menos una vez. El ciclo se repite mientras la opción sea diferente de `3`, que corresponde a salir.
-
-### 3. Partida
-
-> Cuando el usuario elige jugar, llamo a la función `jugar`. Esa función pide la dificultad, obtiene la cantidad máxima de intentos, selecciona un código secreto predefinido y repite los intentos mientras todavía queden oportunidades y el jugador no haya ganado.
-
-### 4. Validación
-
-> Antes de comparar un intento, verifico que tenga exactamente tres dígitos y que no repita ninguno. Esto evita resultados ambiguos al calcular pistas.
-
-### 5. Pistas
-
-> Para calcular los dígitos bien ubicados, comparo las tres posiciones. Para calcular los mal ubicados, cuento cuántos dígitos del intento existen dentro del código secreto y resto los que ya estaban bien ubicados.
-
-### 6. Herramientas usadas
-
-> No usé arrays, clases ni bibliotecas adicionales. La lógica se basa en `if`, `while`, `do while`, `for`, `% 10`, `/ 10` y funciones.
-
-### 7. Cierre
-
-> El resultado es un juego funcional, fácil de probar y alineado con los contenidos vistos en clase.
-
-## Orden recomendado para una demo
-
-1. Mostrar brevemente la lista de prototipos.
+1. Mostrar brevemente los prototipos agrupados.
 2. Señalar `main`.
 3. Compilar.
-4. Ejecutar el juego.
-5. Elegir dificultad fácil.
-6. Ingresar `468` para mostrar pistas.
-7. Ingresar `864` para ganar la primera partida fácil.
-8. Mostrar el puntaje.
+4. Ejecutar.
+5. Elegir `7` intentos.
+6. Ingresar `572`.
+7. Escribir `0` y pedir las pistas `1` y `2`.
+8. Ingresar `527` para ganar la primera partida.
 
-## Frases útiles si necesitas pensar
+## Guion durante la demo
 
-- "Primero voy a explicar qué condición controla este ciclo."
-- "Esta variable guarda una copia para no perder el valor original."
-- "Uso `% 10` porque necesito obtener el último dígito."
-- "Uso `/ 10` porque después de revisar ese dígito debo eliminarlo."
-- "Elegí `for` porque la cantidad de repeticiones es exactamente tres."
-- "Elegí `while` porque la cantidad de repeticiones depende de una condición."
+> En la primera partida el código secreto es `527`. Voy a ingresar `572`. Los tres dígitos existen, pero solo el `5` está bien ubicado. Ahora escribo `0` para demostrar que el usuario puede elegir la pista que necesita. Finalmente ingreso `527` para mostrar la victoria y el puntaje.
 
-## Frases que debes evitar
+## Frases útiles
 
-- "Lo hice así porque funcionó."
-- "No sé, lo generó la computadora."
-- "Memoricé esta parte."
-- "Creo que hace eso."
-
-Si no recuerdas un detalle, vuelve al problema:
-
-> Necesito revisar tres dígitos. Extraigo uno, lo proceso, lo elimino y repito.
+- "Esta función tiene una responsabilidad concreta."
+- "Uso `% 10` para extraer el último dígito."
+- "Uso `/ 10` para eliminar el dígito ya procesado."
+- "El comando `0` no se confunde con un código válido de tres dígitos."
+- "Pedir una pista no consume intentos."
+- "El puntaje depende de intentos usados, no de intentos elegidos."

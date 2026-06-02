@@ -1,104 +1,71 @@
-# Código Secreto
+# Código Secreto: alcance implementado
 
-## 1. Concepto del juego
+## 1. Concepto
 
-**Código Secreto** es un juego de consola. El jugador debe descubrir un número oculto de 3 dígitos en un máximo de 7 intentos.
+Código Secreto es un juego de consola escrito en C++. El jugador debe descubrir un número oculto de tres dígitos diferentes.
 
-Después de cada intento, el programa indica:
+La versión implementada busca ser:
 
-- Cuántos dígitos están en la posición correcta.
-- Cuántos dígitos existen, pero están en otra posición.
-- Si el jugador ganó o perdió.
-- El puntaje final según los intentos restantes.
+- Fácil de jugar.
+- Fácil de explicar desde cero.
+- Compatible con los contenidos de Introducción a la Programación.
+- Comprensible sin arrays, clases ni bibliotecas adicionales.
 
-Ejemplo:
+## 2. Experiencia del jugador
 
-```text
-=== CODIGO SECRETO ===
-Intento 1 de 7: 527
-Digitos correctos y bien ubicados: 1
-Digitos correctos pero mal ubicados: 1
-```
+1. El jugador inicia una partida.
+2. Define cuántos intentos quiere tener: entre `1` y `20`.
+3. Ingresa códigos de tres dígitos diferentes.
+4. Puede escribir `0` durante cualquier turno para pedir una pista.
+5. Continúa hasta ganar o quedarse sin intentos.
 
-## 2. Alcance recomendado
+## 3. Pistas disponibles
 
-Para terminar el proyecto en poco tiempo:
+El jugador decide qué información necesita:
 
-1. Usa códigos de 3 dígitos sin dígitos repetidos.
-2. Alterna entre 5 códigos predefinidos mediante condicionales.
-3. Añade tres dificultades:
-   - Fácil: 10 intentos.
-   - Normal: 7 intentos.
-   - Difícil: 5 intentos.
-4. Muestra instrucciones, puntaje y opción para volver a jugar.
+1. Cantidad de dígitos bien ubicados en el último intento.
+2. Cantidad de dígitos correctos que están en otra posición.
+3. Cantidad de dígitos pares del código secreto.
+4. Suma de los dígitos del código secreto.
+5. Si el código es mayor o menor que `500`.
 
-La base evita arrays y bibliotecas adicionales. Si el profesor permite agregar una biblioteca para generar valores aleatorios, esa mejora puede incorporarse después de terminar la versión funcional.
+También puede volver a la partida sin pedir una pista.
 
-## 3. Por qué conviene
+## 4. Razones de diseño
 
-El juego utiliza exactamente lo que aparece en las lecciones y los prácticos:
+### Intentos configurables
 
-- Condicionales `if`.
-- Ciclos `while` y `for`.
-- Funciones.
-- Extracción de dígitos con `% 10`.
-- Eliminación de dígitos con `/ 10`.
-- Contadores y validación de entrada.
+El juego ya no impone dificultades predefinidas. El jugador decide cuántas oportunidades necesita. La recomendación visible en consola es usar `7`.
 
-Además, parece más elaborado de lo que realmente es. No necesitas gráficos, clases ni librerías complejas.
+### Comando de pistas
 
-## 4. Segunda fase: Clave reordenada
+El comando `0` es fácil de recordar y no puede confundirse con un código válido de tres dígitos.
 
-La mejor funcionalidad adicional está en la clase del 28 de abril: agregar una **segunda fase de desbloqueo** basada en intercalación de dígitos.
+### Puntaje independiente de la configuración
 
-Adivinar el código no abre inmediatamente la bóveda. Después, el jugador debe ingresar una clave transformada siguiendo una regla seleccionada por el programa.
-
-Ejemplo:
-
-```text
-Codigo descubierto: 7316425
-Regla: intercalar pares e impares de mayor a menor
-
-Pares:   6, 4, 2
-Impares: 7, 5, 3, 1
-
-Clave final: 6745231
-```
-
-El jugador debe calcular e ingresar `6745231`. Solo tiene dos oportunidades.
-
-### Reglas posibles
-
-- Intercalar pares e impares de mayor a menor.
-- Intercalar primos y no primos de mayor a menor.
-- Intercalar pares ascendentes e impares descendentes.
-- Separar el código en grupos de `ND = 2` dígitos.
-
-Esto está directamente basado en [SIS111 2026-04-28.md](/home/cszv/Documents/UCB-LIA/sis111/lessons/SIS111%202026-04-28.md:221) y la segmentación `ND` de [SIS111 2026-04-22.md](/home/cszv/Documents/UCB-LIA/sis111/lessons/SIS111%202026-04-22.md:311).
-
-Esta mejora eleva la dificultad lógica del programa: requiere ordenar, crear copias del número, clasificar dígitos y reconstruir una nueva clave. No se limita a hacer más difícil la partida.
-
-## 5. Organización inicial del código
-
-El juego podría dividirse en funciones como:
+El puntaje depende de los intentos usados:
 
 ```cpp
-mostrarMenu();
-elegirCodigoSecreto();
-contarDigitosBienUbicados();
-contarDigitosExistentes();
-calcularPuntaje();
-jugar();
+puntaje = 1100 - intentosUsados * 100;
 ```
 
-## 6. Explicación para el docente
+Elegir más intentos no aumenta el puntaje.
 
-> Además de las pistas, agregaré una segunda fase. Cuando el jugador descubra el código, deberá transformarlo según una regla seleccionada por el programa: por ejemplo, intercalar pares e impares ordenados, o primos y no primos. Tendrá intentos limitados para ingresar la clave final. Así aplicaré ordenamiento, intercalación, segmentación y reconstrucción de números.
+## 5. Relación con las lecciones
 
-## 7. Ideas alternativas
+| Tema | Aplicación |
+| :--- | :--- |
+| Condicionales | Validar opciones y elegir comportamientos. |
+| `while` | Repetir validaciones y búsquedas. |
+| `do while` | Repetir el menú principal. |
+| `for` | Comparar exactamente tres posiciones. |
+| `% 10` | Extraer el último dígito. |
+| `/ 10` | Eliminar el último dígito. |
+| Funciones | Mantener responsabilidades pequeñas y claras. |
+| Contadores | Registrar intentos y pistas. |
 
-- Batalla matemática por turnos: responder operaciones para atacar a un enemigo.
-- Adivina el número con pistas: mayor, menor, par, impar o primo.
-- Carrera de dados en consola: dos jugadores avanzan hasta llegar a la meta.
+## 6. Alcance final
 
-La mejor relación entre presentación y tiempo es **Código Secreto**. Permite demostrar manipulación de números, que es el tema más trabajado en las lecciones, sin ampliar demasiado el proyecto.
+El proyecto evita agregar una segunda fase compleja. La prioridad es presentar una base funcional, clara y defendible técnicamente.
+
+El código completo está en [`../codigo.cpp`](../codigo.cpp) y su explicación detallada está en [`../codigo.md`](../codigo.md).

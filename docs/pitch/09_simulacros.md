@@ -1,219 +1,162 @@
 # Simulacros de evaluación
 
-## Cómo usarlos
-
-Cada simulacro representa la estructura anunciada:
+## Puntaje
 
 | Parte | Puntaje |
 | :--- | ---: |
 | Pregunta 1 | 33 |
 | Pregunta 2 | 33 |
-| Modificación de 5 minutos | 34 |
+| Modificación cronometrada | 34 |
 
-Usa un cronómetro. No abras las respuestas hasta terminar.
-
-## Criterio para puntuar tus respuestas
-
-| Nivel | Puntaje orientativo por pregunta |
-| :--- | ---: |
-| Explicación clara, correcta y con ejemplo | 33 |
-| Idea correcta, pero incompleta | 20 |
-| Respuesta memorizada sin justificar | 10 |
-| No puede responder | 0 |
-
-Para la modificación:
-
-| Resultado | Puntaje orientativo |
-| :--- | ---: |
-| Modifica, compila y demuestra el cambio | 34 |
-| Modifica correctamente, pero no prueba | 24 |
-| Identifica dónde cambiar, pero no termina | 12 |
-| No identifica la función responsable | 0 |
-
----
+Usa un cronómetro real.
 
 ## Simulacro 1: fundamentos
 
 ### Pregunta 1
 
-¿Por qué usaste un ciclo `for` en `contarDigitosBienUbicados` y un ciclo `while` en `existeDigito`?
+¿Por qué usaste `for` para comparar posiciones y `while` para recorrer dígitos?
 
 ### Pregunta 2
 
-Explica con el número `527` qué hacen `% 10` y `/ 10`.
+Explica `% 10` y `/ 10` usando `527`.
 
 ### Modificación
 
-Cambia la dificultad difícil de 5 intentos a 4 intentos. Compila y demuestra el cambio.
+Permite hasta `30` intentos.
 
 ### Respuesta esperada
 
-- `for`: compara exactamente tres posiciones.
-- `while`: busca hasta encontrar el dígito o terminar el número; no se conoce de antemano cuándo ocurrirá.
+- `for`: exactamente tres posiciones.
+- `while`: repetir mientras queden dígitos.
 - `527 % 10 = 7`.
 - `527 / 10 = 52`.
-- Cambio en `obtenerCantidadIntentos`.
+- Cambiar mensajes y límite en `pedirCantidadIntentos`.
 
----
-
-## Simulacro 2: validación
+## Simulacro 2: comando
 
 ### Pregunta 1
 
-Explica cómo detectas que `551` tiene dígitos repetidos sin usar arrays.
+¿Por qué `0` funciona bien como comando?
 
 ### Pregunta 2
 
-¿Cuál es la diferencia entre `=` y `==`? Muestra un ejemplo de tu proyecto.
+¿Cuál es la diferencia entre un código inválido y un intento fallido?
 
 ### Modificación
 
-Después de cada intento incorrecto, muestra cuántos intentos quedan. Compila y demuestra el cambio.
+Cambia el comando de pistas de `0` a `9`.
 
 ### Respuesta esperada
 
-- Extraer `1`, buscarlo en `55`; luego extraer `5`, buscarlo en `5`; encontrar repetición.
-- `=` asigna y `==` compara.
-- Mostrar `cantidadIntentos - intentosUsados` dentro del `else` de `jugar`.
-
----
+- `0` no se confunde con un código de tres dígitos.
+- Un inválido no consume intento; un código válido incorrecto sí.
+- Actualizar condición y mensajes.
 
 ## Simulacro 3: pistas
 
 ### Pregunta 1
 
-Con código secreto `864` e intento `468`, explica paso a paso las dos pistas.
+Con secreto `527` e intento `572`, explica las pistas `1` y `2`.
 
 ### Pregunta 2
 
-¿Por qué `contarDigitosMalUbicados` resta los bien ubicados?
+¿Por qué `mostrarPista` retorna `bool`?
 
 ### Modificación
 
-Haz que cada intento restante valga 75 puntos en vez de 50. Compila y demuestra el cambio.
+Haz que cada pista mostrada consuma un intento.
 
 ### Respuesta esperada
 
-- Bien ubicados: `1`, porque el `6` coincide en posición.
-- Existentes: `3`, porque `4`, `6` y `8` aparecen en el secreto.
-- Mal ubicados: `3 - 1 = 2`.
-- Cambiar la fórmula de `calcularPuntaje`.
+- Bien ubicados: `1`.
+- Mal ubicados: `2`.
+- El `bool` indica si se mostró una pista útil.
+- Incrementar `intentosUsados` junto con `pistasUsadas`.
 
----
-
-## Simulacro 4: estructura del programa
+## Simulacro 4: funciones
 
 ### Pregunta 1
 
-Explica la diferencia entre un prototipo, una llamada y una definición de función.
+Explica prototipo, llamada y definición.
 
 ### Pregunta 2
 
-¿Por qué el menú principal usa `do while`?
+Explica `sumarDigitos` con `527`.
 
 ### Modificación
 
-Agrega una dificultad extrema con 3 intentos. Compila y demuestra el cambio.
+Muestra intentos usados en cada turno.
 
 ### Respuesta esperada
 
-- El prototipo anuncia, la llamada ejecuta y la definición contiene la lógica.
-- El menú debe mostrarse al menos una vez.
-- Modificar menú, rango válido y conversión de dificultad a intentos.
+- Prototipo anuncia, llamada ejecuta y definición contiene lógica.
+- `5 + 2 + 7 = 14`.
+- Añadir un `cout` en `mostrarEstadoPartida`.
 
----
-
-## Simulacro 5: comprensión de condiciones
+## Simulacro 5: puntaje
 
 ### Pregunta 1
 
-Explica:
-
-```cpp
-while (intentosUsados < cantidadIntentos && gano == false)
-```
+¿Por qué el puntaje depende de intentos usados y no de intentos restantes?
 
 ### Pregunta 2
 
-¿Qué pasaría si se elimina `/ 10` dentro de `existeDigito`?
+¿Cómo evitas puntajes negativos?
 
 ### Modificación
 
-Muestra un mensaje de despedida al salir del programa. Compila y demuestra el cambio.
+Resta `75` puntos por intento usado, manteniendo `1000` al ganar en el primer intento.
 
 ### Respuesta esperada
 
-- La partida sigue solo si quedan intentos y todavía no ganó.
-- Sin `/ 10`, el número no cambia y el ciclo puede quedar revisando siempre lo mismo.
-- Añadir `cout` antes de `return 0` en `main`.
+- El jugador configura el máximo; usar restantes sería injusto.
+- Aplicar mínimo de cero.
+- Fórmula: `1075 - intentosUsados * 75`.
 
----
-
-## Simulacro 6: función nueva
+## Simulacro 6: validación
 
 ### Pregunta 1
 
-¿Por qué puedes dividir `codigoSecreto` dentro de una función sin destruir el valor original de la partida?
+Explica cómo detectas repeticiones sin arrays.
 
 ### Pregunta 2
 
-¿Por qué usaste códigos predefinidos en lugar de números aleatorios?
+¿Qué hace `leerEntero` cuando recibe texto?
 
 ### Modificación
 
-Cuando el jugador pierda, muestra la suma de los dígitos del código secreto. Compila y demuestra el cambio.
+Rechaza códigos que contienen cero.
 
 ### Respuesta esperada
 
-- Los parámetros se reciben por valor: la función trabaja con copias locales.
-- El alcance evita bibliotecas adicionales y mantiene lógica básica.
-- Crear `sumarDigitos` con `% 10`, `/ 10`, acumulador y `while`.
+- Extraer, cortar y buscar en la parte restante.
+- Limpiar estado de `cin` y descartar entrada incorrecta.
+- Crear `contieneCero` y usarla en `esCodigoValido`.
 
----
-
-## Simulacro 7: sorpresa controlada
+## Simulacro 7: ampliación
 
 ### Pregunta 1
 
-Explica cómo se selecciona el código secreto en una partida.
+¿Cómo funciona `contarDigitosPares`?
 
 ### Pregunta 2
 
-¿Qué diferencia hay entre `&&` y `||`? Usa ejemplos del proyecto.
+Explica la condición principal de la partida.
 
 ### Modificación
 
-Impide que el jugador ingrese códigos que contengan el dígito cero. Compila y demuestra que `102` es rechazado.
+Añade una pista para contar dígitos impares.
 
 ### Respuesta esperada
 
-- `(dificultad + numeroPartida) % 5` produce un selector de `0` a `4`.
-- `&&`: ambas condiciones deben cumplirse. `||`: basta con una.
-- Crear `contieneCero` y usarla desde `esIntentoValido`.
+- Recorrer y evaluar `digito % 2 == 0`.
+- Seguir si quedan intentos y todavía no ganó.
+- Reutilizar estructura con `digito % 2 != 0`.
 
----
-
-## Simulacro 8: evaluación final
-
-Este simulacro no incluye respuestas inmediatas. Resuélvelo y revisa los documentos después.
-
-### Pregunta 1
-
-Explica el mapa completo desde que el usuario elige jugar hasta que recibe una pista.
-
-### Pregunta 2
-
-Explica por qué el proyecto cumple la restricción de lógica pura sin arrays.
-
-### Modificación
-
-Después de fallar, indica si el intento contiene al menos un dígito par. Compila y demuestra el cambio.
-
-## Registro de resultados
+## Registro
 
 | Fecha | Simulacro | Pregunta 1 | Pregunta 2 | Modificación | Total | Tema a reforzar |
 | :--- | :--- | ---: | ---: | ---: | ---: | :--- |
-| | | | | | | |
 | | | | | | | |
 | | | | | | | |
 | | | | | | | |

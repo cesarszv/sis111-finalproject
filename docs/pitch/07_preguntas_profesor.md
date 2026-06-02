@@ -2,295 +2,295 @@
 
 ## Cómo practicar
 
-La evaluación incluye dos preguntas sobre el proyecto. Para practicar:
+1. Leer únicamente la pregunta.
+2. Responder en voz alta sin mirar.
+3. Comparar con la respuesta modelo.
+4. Repetir hasta responder con claridad en menos de un minuto.
 
-1. Lee únicamente la pregunta.
-2. Responde en voz alta sin mirar.
-3. Compara tu respuesta con la respuesta modelo.
-4. Repite hasta responder con claridad en menos de un minuto.
-
-No memorices palabra por palabra. Comprende la idea.
-
-## Preguntas de prioridad alta
+## Preguntas principales
 
 ### 1. ¿Qué hace tu proyecto?
 
-**Respuesta corta:**
+Código Secreto es un juego de consola. El jugador define cuántos intentos tendrá y debe descubrir un código oculto de tres dígitos diferentes. Durante la partida puede escribir `0` para pedir una pista.
 
-Código Secreto es un juego de consola donde el jugador debe descubrir un número oculto de tres dígitos diferentes. Después de cada intento incorrecto recibe pistas sobre dígitos bien ubicados y mal ubicados.
+### 2. ¿Qué temas aplicaste?
 
-### 2. ¿Qué temas de la materia aplicaste?
+Variables, condicionales, ciclos `while`, `do while` y `for`, funciones, valores `bool`, operadores lógicos, contadores, `% 10`, `/ 10` y validación de entradas.
 
-**Respuesta corta:**
+### 3. ¿Por qué todo está en un solo archivo?
 
-Usé variables, condicionales, funciones, `while`, `do while`, `for`, operadores lógicos, `% 10`, `/ 10`, contadores y validación de entradas.
+Porque el profesor solicitó una entrega en un único `.cpp`. Mantengo el orden usando funciones pequeñas y prototipos antes de `main`.
 
-### 3. ¿Qué es un prototipo de función?
+### 4. ¿Qué es un prototipo?
 
-**Respuesta corta:**
-
-Es una declaración que informa al compilador el nombre de una función, el tipo de dato que devuelve y los parámetros que recibe. Termina con punto y coma porque todavía no incluye la lógica.
-
-**Ejemplo:**
+Es una declaración que informa qué función existirá, qué tipo devuelve y qué parámetros recibe.
 
 ```cpp
-int calcularPuntaje(int intentosRestantes, int dificultad);
+int sumarDigitos(int numero);
 ```
 
-### 4. ¿Cuál es la diferencia entre prototipo, llamada y definición?
-
-**Respuesta corta:**
-
-- El prototipo anuncia que la función existirá.
-- La llamada ejecuta la función.
-- La definición contiene las instrucciones completas.
+### 5. ¿Cuál es la diferencia entre prototipo, llamada y definición?
 
 ```cpp
-int calcularPuntaje(int intentosRestantes, int dificultad); // prototipo
-puntaje = calcularPuntaje(9, 1);                            // llamada
+int sumarDigitos(int numero); // prototipo
+sumarDigitos(codigoSecreto);  // llamada
 
-int calcularPuntaje(int intentosRestantes, int dificultad) { // definición
-    return dificultad * 100 + intentosRestantes * 50;
+int sumarDigitos(int numero) { // definición
+    // lógica
 }
 ```
 
-### 5. ¿Por qué usaste `% 10`?
+- Prototipo: anuncia.
+- Llamada: ejecuta.
+- Definición: contiene la lógica.
 
-**Respuesta corta:**
+### 6. ¿Por qué usaste `do while`?
 
-Porque `% 10` devuelve el residuo de dividir entre diez, que corresponde al último dígito del número. Por ejemplo, `527 % 10` es `7`.
+Porque el menú principal debe mostrarse al menos una vez. El `do while` ejecuta primero y evalúa la condición al final.
 
-### 6. ¿Por qué usaste `/ 10`?
+### 7. ¿Por qué usaste `while` en la partida?
 
-**Respuesta corta:**
+Porque no sabemos exactamente cuántos turnos serán necesarios. La partida continúa mientras queden intentos y el jugador no haya ganado.
 
-Porque la división entera entre diez elimina el último dígito. Por ejemplo, `527 / 10` es `52`.
+### 8. ¿Por qué usaste `for` al comparar posiciones?
 
-### 7. ¿Por qué usaste `for` para contar dígitos bien ubicados?
+Porque siempre se comparan exactamente tres posiciones.
 
-**Respuesta corta:**
+### 9. ¿Qué significa `% 10`?
 
-Porque sé exactamente cuántas posiciones debo comparar: tres. El `for` es adecuado cuando la cantidad de repeticiones es conocida.
+Obtiene el residuo de dividir entre `10`, que corresponde al último dígito:
 
-### 8. ¿Por qué usaste `while` dentro de la partida?
-
-**Respuesta corta:**
-
-Porque la cantidad real de intentos usados no se conoce de antemano. La partida continúa mientras queden intentos y el jugador todavía no haya ganado.
-
-### 9. ¿Por qué usaste `do while` en `main`?
-
-**Respuesta corta:**
-
-Porque el menú debe mostrarse al menos una vez. El `do while` ejecuta primero y revisa la condición al final.
-
-### 10. ¿Qué significa esta condición?
-
-```cpp
-while (intentosUsados < cantidadIntentos && gano == false)
+```text
+527 % 10 = 7
 ```
 
-**Respuesta corta:**
+### 10. ¿Qué significa `/ 10`?
 
-La partida continúa únicamente mientras todavía queden intentos y el jugador no haya descubierto el código. `&&` exige que ambas condiciones sean verdaderas.
+La división entera elimina el último dígito:
+
+```text
+527 / 10 = 52
+```
 
 ### 11. ¿Cuál es la diferencia entre `=` y `==`?
 
-**Respuesta corta:**
-
-- `=` asigna un valor.
-- `==` compara dos valores.
-
-Ejemplo:
+- `=` asigna.
+- `==` compara.
 
 ```cpp
-gano = true;          // asignación
-intento == codigoSecreto // comparación
+gano = true;
+codigoOComando == 0
 ```
 
-### 12. ¿Cómo validas un intento?
+### 12. ¿Qué significa `&&`?
 
-**Respuesta corta:**
-
-Compruebo que tenga exactamente tres dígitos y que no repita ninguno. La función `esIntentoValido` combina ambas condiciones.
-
-### 13. ¿Cómo detectas dígitos repetidos sin arrays?
-
-**Respuesta corta:**
-
-Extraigo un dígito con `% 10`, corto el número con `/ 10` y busco si ese dígito aparece en la parte restante. Repito hasta encontrar una repetición o terminar el número.
-
-### 14. ¿Cómo cuentas los dígitos bien ubicados?
-
-**Respuesta corta:**
-
-Comparo el último dígito del código secreto con el último dígito del intento. Después corto ambos números y repito exactamente tres veces.
-
-### 15. ¿Cómo cuentas los dígitos mal ubicados?
-
-**Respuesta corta:**
-
-Primero cuento cuántos dígitos del intento existen en el código secreto. Luego resto los que ya estaban bien ubicados. Así quedan únicamente los correctos que están en otra posición.
-
-### 16. ¿Por qué restas los bien ubicados?
-
-**Respuesta corta:**
-
-Porque un dígito bien ubicado también existe dentro del código. Si no lo resto, lo contaría incorrectamente como mal ubicado.
-
-### 17. ¿Por qué el código secreto no es aleatorio?
-
-**Respuesta corta:**
-
-Para respetar el alcance de Introducción a la Programación y evitar bibliotecas adicionales. Uso cinco códigos predefinidos y los alterno con condicionales.
-
-### 18. ¿Cómo eliges uno de los cinco códigos?
-
-**Respuesta corta:**
-
-Calculo:
+Significa "y". Ambas condiciones deben ser verdaderas.
 
 ```cpp
-(dificultad + numeroPartida) % 5
+intentosUsados < cantidadIntentos && gano == false
 ```
 
-El residuo siempre queda entre `0` y `4`, así puedo seleccionar una de cinco opciones con `if` y `else if`.
+### 13. ¿Qué significa `||`?
 
-### 19. ¿Por qué no usaste arrays?
+Significa "o". Basta con que una condición sea verdadera.
 
-**Respuesta corta:**
+```cpp
+cantidadIntentos < 1 || cantidadIntentos > 20
+```
 
-Porque el proyecto sigue la restricción de trabajar con lógica básica. En lugar de guardar dígitos en un array, los proceso matemáticamente con `% 10` y `/ 10`.
+### 14. ¿Cómo validas un código?
 
-### 20. ¿Cómo calculas el puntaje?
+La función `esCodigoValido` comprueba que tenga exactamente tres dígitos y que no repita ninguno.
 
-**Respuesta corta:**
+### 15. ¿Cómo detectas repeticiones sin arrays?
+
+Extraigo un dígito, corto el número y busco si ese dígito aparece en la parte restante.
+
+### 16. ¿Cómo cuentas dígitos bien ubicados?
+
+Comparo el último dígito del secreto con el último del intento, corto ambos números y repito tres veces.
+
+### 17. ¿Cómo cuentas dígitos mal ubicados?
+
+Primero cuento cuántos dígitos existen dentro del secreto. Después resto los que ya estaban bien ubicados.
+
+### 18. ¿Por qué restas los bien ubicados?
+
+Porque un dígito bien ubicado también existe. Sin restarlo, se contaría dos veces.
+
+### 19. ¿Cómo cuenta pares la función `contarDigitosPares`?
+
+Recorre cada dígito y pregunta:
+
+```cpp
+digito % 2 == 0
+```
+
+Si el residuo es cero, incrementa el contador.
+
+### 20. ¿Cómo funciona `sumarDigitos`?
+
+Recorre dígitos y acumula:
+
+```cpp
+suma = suma + digito;
+```
+
+### 21. ¿Por qué el usuario elige la cantidad de intentos?
+
+Para que la experiencia sea ajustable. Un jugador nuevo puede pedir más oportunidades y otro puede elegir un reto corto.
+
+### 22. ¿Por qué limitas la cantidad entre `1` y `20`?
+
+Para rechazar valores inválidos como cero o negativos y evitar partidas excesivamente largas.
+
+### 23. ¿Por qué el comando es `0`?
+
+Porque es fácil de recordar y no puede confundirse con un código válido de tres dígitos.
+
+### 24. ¿Pedir pistas consume intentos?
+
+No. Solo ingresar un código válido incrementa `intentosUsados`.
+
+### 25. ¿Qué pistas necesitan un intento previo?
+
+Las pistas `1` y `2`, porque comparan el código secreto con `ultimoIntento`.
+
+### 26. ¿Qué hace `ultimoIntento`?
+
+Guarda el código válido más reciente para calcular pistas sobre posiciones.
+
+### 27. ¿Por qué `mostrarPista` retorna `bool`?
+
+Retorna `true` si realmente mostró una pista y `false` si no mostró información útil. Así el contador `pistasUsadas` solo aumenta cuando corresponde.
+
+### 28. ¿Qué ocurre si pido la pista 1 antes de intentar?
+
+El programa explica que primero se necesita un código para comparar posiciones y no incrementa `pistasUsadas`.
+
+### 29. ¿Cómo eliges códigos secretos sin números aleatorios?
 
 Uso:
 
 ```cpp
-dificultad * 100 + intentosRestantes * 50
+selector = numeroPartida % 5;
 ```
 
-La fórmula premia una dificultad mayor y resolver el código usando menos intentos.
+El residuo permite alternar cinco códigos predefinidos.
 
-## Preguntas de prioridad media
+### 30. ¿Por qué no usaste una biblioteca para números aleatorios?
 
-### 21. ¿Qué es una función `bool`?
+Para mantener la solución dentro del alcance de lógica básica y evitar bibliotecas adicionales.
 
-Devuelve únicamente `true` o `false`. Es útil para representar preguntas como: "¿tiene tres dígitos?" o "¿existe este dígito?".
-
-### 22. ¿Qué hace `return`?
-
-Devuelve el resultado de una función al lugar desde donde fue llamada.
-
-### 23. ¿Qué hace `numeroPartida++`?
-
-Incrementa `numeroPartida` en uno. Es equivalente a:
+### 31. ¿Cómo calculas el puntaje?
 
 ```cpp
-numeroPartida = numeroPartida + 1;
+puntaje = 1100 - intentosUsados * 100;
 ```
 
-### 24. ¿Por qué inicializas variables?
+El puntaje disminuye con cada intento usado.
 
-Porque una variable debe comenzar con un valor conocido antes de usarla. Por ejemplo, un contador debe comenzar en cero.
+### 32. ¿Por qué no usas los intentos restantes en el puntaje?
 
-### 25. ¿Qué hace `cin.clear()`?
+Porque el jugador define cuántos intentos tendrá. Si premiara los restantes, elegir un límite alto aumentaría artificialmente el puntaje.
 
-Limpia el estado de error de `cin` cuando el usuario ingresa un dato inválido, como letras en lugar de un número.
+### 33. ¿Cómo evitas puntajes negativos?
 
-### 26. ¿Qué hace `cin.ignore(1000, '\n')`?
+```cpp
+if (puntaje < 0) {
+    puntaje = 0;
+}
+```
 
-Descarta la entrada incorrecta hasta encontrar el salto de línea. Así el programa puede pedir un dato nuevo.
+### 34. ¿Qué hace `leerEntero` si escribo texto?
 
-### 27. ¿Qué diferencia hay entre `if` y `else if`?
+Limpia el error de `cin`, descarta la entrada incorrecta y solicita otro entero.
 
-Un `if` independiente siempre puede evaluarse. Un `else if` solo se evalúa cuando las condiciones anteriores de la misma cadena fueron falsas.
+### 35. ¿Qué diferencia hay entre código inválido e intento fallido?
 
-### 28. ¿Por qué recibes `codigoSecreto` e `intento` como parámetros?
+- Código inválido: no cumple tres dígitos diferentes y no consume intento.
+- Intento fallido: es válido, pero no coincide con el secreto y sí consume intento.
 
-Porque esas funciones necesitan comparar valores concretos. Los parámetros permiten reutilizar la misma lógica con distintos códigos e intentos.
+### 36. ¿Por qué puedes dividir parámetros sin destruir valores originales?
 
-### 29. ¿Por qué puedes dividir los parámetros sin destruir las variables originales?
+Porque se reciben por valor. Cada función trabaja con copias locales.
 
-Porque se reciben por valor. La función trabaja con copias locales. Modificar esas copias no cambia las variables originales usadas en la partida.
+## Preguntas de traza
 
-### 30. ¿Cuál es el algoritmo general para revisar un número?
+### 37. ¿Qué devuelve `527 % 10`?
 
-Extraer un dígito con `% 10`, procesarlo, cortar el número con `/ 10` y repetir mientras todavía queden dígitos.
+`7`.
 
-## Preguntas de traza manual
+### 38. ¿Qué devuelve `527 / 10`?
 
-### 31. ¿Qué devuelve `527 % 10`?
+`52`.
 
-Devuelve `7`.
+### 39. ¿Es válido `551`?
 
-### 32. ¿Qué devuelve `527 / 10` usando enteros?
+No. Repite el dígito `5`.
 
-Devuelve `52`.
-
-### 33. ¿Qué ocurre con `esIntentoValido(551)`?
-
-Devuelve `false` porque el dígito `5` está repetido.
-
-### 34. Con código `864` e intento `468`, ¿qué pistas aparecen?
+### 40. Con secreto `527` e intento `572`, ¿qué pistas aparecen?
 
 ```text
 Bien ubicados: 1
 Mal ubicados: 2
 ```
 
-El `6` está bien ubicado. El `4` y el `8` existen, pero están intercambiados.
+### 41. ¿Cuántos pares tiene `527`?
 
-### 35. Con código `864` e intento `123`, ¿qué pistas aparecen?
+Uno: el dígito `2`.
+
+### 42. ¿Cuánto suman los dígitos de `527`?
 
 ```text
-Bien ubicados: 0
-Mal ubicados: 0
+5 + 2 + 7 = 14
 ```
 
-### 36. En la primera partida fácil, ¿cuál es el código secreto?
+### 43. ¿Cuál es el secreto de la primera partida?
 
 ```text
-dificultad = 1
 numeroPartida = 1
-selector = (1 + 1) % 5 = 2
-codigoSecreto = 864
+selector = 1 % 5 = 1
+codigoSecreto = 527
 ```
 
-## Preguntas para medir comprensión real
+### 44. Si ganas en dos intentos, ¿cuál es el puntaje?
 
-### 37. ¿Qué pasaría si cambias `&&` por `||` en el ciclo de la partida?
+```text
+1100 - 2 * 100 = 900
+```
 
-La lógica sería incorrecta. El ciclo podría continuar incluso después de ganar o cuando ya no queden intentos, porque bastaría con que una sola condición fuera verdadera.
+## Preguntas para medir comprensión
 
-### 38. ¿Qué pasaría si eliminas `/ 10` dentro de un ciclo de dígitos?
+### 45. ¿Qué ocurriría si eliminas `/ 10` dentro de un ciclo de dígitos?
 
 El número no cambiaría. El ciclo revisaría siempre el mismo último dígito y podría no terminar.
 
-### 39. ¿Qué pasaría si no restas `bienUbicados` en `contarDigitosMalUbicados`?
+### 46. ¿Qué ocurriría si las pistas consumieran intentos?
 
-Los dígitos bien ubicados también serían contados como mal ubicados. Las pistas quedarían infladas.
+Habría que incrementar `intentosUsados` dentro del bloque donde `codigoOComando == 0`.
 
-### 40. ¿Qué parte cambiarías para añadir una dificultad extrema?
+### 47. ¿Qué cambiarías para aceptar hasta 30 intentos?
 
-Cambiaría:
+Modificaría el mensaje y la condición de `pedirCantidadIntentos`:
 
-1. El menú de `pedirDificultad`.
-2. La validación para aceptar `1` a `4`.
-3. `obtenerCantidadIntentos` para devolver la cantidad correspondiente a la opción `4`.
+```cpp
+cantidadIntentos > 30
+```
 
-## Respuesta estructurada cuando te sorprendan
+### 48. ¿Qué cambiarías para contar impares?
 
-Si no sabes responder inmediatamente:
+Usaría el mismo recorrido que `contarDigitosPares`, pero cambiaría la condición:
 
-1. Repite el objetivo de la función.
-2. Indica qué dato entra.
-3. Explica qué condición se evalúa.
-4. Describe qué variable cambia.
-5. Indica qué resultado sale.
+```cpp
+digito % 2 != 0
+```
 
-Ejemplo:
+## Estructura para responder una sorpresa
 
-> Esta función necesita saber si un dígito existe. Recibe el número y el dígito buscado. Mientras todavía quedan dígitos y no lo encontró, extrae el último con `% 10`, corta con `/ 10` y compara. Finalmente devuelve verdadero o falso.
+1. Objetivo de la función.
+2. Datos que recibe.
+3. Condición.
+4. Variables que cambian.
+5. Resultado.
+6. Ejemplo.

@@ -1,143 +1,137 @@
 # Modificaciones presenciales de 5 minutos
 
-## Objetivo
+## Método
 
-La tercera parte de la evaluación vale **34 puntos**. Debes practicar cambios pequeños usando un cronómetro real.
-
-## Método de trabajo durante la evaluación
-
-1. Escucha el cambio completo.
-2. Repite el requerimiento con tus palabras.
-3. Identifica la función responsable.
-4. Modifica únicamente lo necesario.
-5. Compila.
-6. Ejecuta una prueba que demuestre el cambio.
-
-Comando:
+1. Escuchar el pedido completo.
+2. Repetirlo con tus palabras.
+3. Identificar la función responsable.
+4. Cambiar únicamente lo necesario.
+5. Compilar.
+6. Probar el caso mínimo.
 
 ```bash
 g++ -std=c++17 -Wall -Wextra -pedantic codigo.cpp -o build/codigo_secreto
 ```
 
-## Nivel 1: cambios fáciles
+Practica en una copia temporal y vuelve al código oficial después de cada ejercicio.
 
-### Modificación 1: cambiar la cantidad de intentos
+## Nivel 1
 
-**Posible pedido:**
+### 1. Permitir hasta 30 intentos
 
-> Quiero que la dificultad difícil tenga solamente 4 intentos.
+**Pedido:**
 
-**Dónde modificar:** `obtenerCantidadIntentos`.
+> Permite que el jugador elija hasta 30 intentos.
+
+**Función:** `pedirCantidadIntentos`.
+
+Cambiar mensajes y condición:
 
 ```cpp
-} else {
-    cantidadIntentos = 4;
-}
+while (cantidadIntentos < 1 || cantidadIntentos > 30)
 ```
 
-**Qué demostrar:** elegir dificultad difícil y comprobar que aparece `Intento 1 de 4`.
+### 2. Cambiar recomendación a 10 intentos
 
-### Modificación 2: cambiar el puntaje
+**Pedido:**
 
-**Posible pedido:**
+> Recomienda 10 intentos para principiantes.
 
-> Quiero que cada intento restante valga 75 puntos.
-
-**Dónde modificar:** `calcularPuntaje`.
+**Función:** `pedirCantidadIntentos`.
 
 ```cpp
-return dificultad * 100 + intentosRestantes * 75;
+cout << "Recomendacion para principiantes: 10 intentos.\n";
 ```
 
-**Qué demostrar:** ganar una partida y explicar la nueva fórmula.
+### 3. Cambiar penalización del puntaje
 
-### Modificación 3: cambiar un código secreto
+**Pedido:**
 
-**Posible pedido:**
+> Resta 75 puntos por intento usado.
 
-> Reemplaza el código `864` por `942`.
+**Función:** `calcularPuntaje`.
 
-**Dónde modificar:** `elegirCodigoSecreto`.
+Para conservar `1000` puntos al ganar en el primer intento:
 
 ```cpp
-} else if (selector == 2) {
+int puntaje = 1075 - intentosUsados * 75;
+```
+
+### 4. Cambiar el primer código secreto
+
+**Pedido:**
+
+> Cambia el primer código secreto por `942`.
+
+**Función:** `elegirCodigoSecreto`.
+
+```cpp
+if (selector == 1) {
     codigoSecreto = 942;
-```
-
-**Control:** usar tres dígitos diferentes.
-
-### Modificación 4: cambiar un mensaje
-
-**Posible pedido:**
-
-> Muestra un mensaje de despedida cuando el usuario salga.
-
-**Dónde modificar:** al terminar el ciclo de `main`, antes de `return 0`.
-
-```cpp
-cout << "\nGracias por jugar.\n";
-```
-
-## Nivel 2: cambios probables
-
-### Modificación 5: mostrar intentos restantes después de fallar
-
-**Posible pedido:**
-
-> Después de cada intento incorrecto, muestra cuántos intentos quedan.
-
-**Dónde modificar:** dentro del `else` de `jugar`, después de mostrar las pistas.
-
-```cpp
-cout << "Intentos restantes: " << cantidadIntentos - intentosUsados << "\n";
-```
-
-**Qué explicar:** se resta la cantidad usada de la cantidad máxima.
-
-### Modificación 6: añadir dificultad extrema
-
-**Posible pedido:**
-
-> Agrega una cuarta dificultad extrema con 3 intentos.
-
-**Cambio 1:** en `pedirDificultad`, añadir:
-
-```cpp
-cout << "4. Extrema: 3 intentos\n";
-```
-
-**Cambio 2:** aceptar el nuevo rango:
-
-```cpp
-while (dificultad < 1 || dificultad > 4) {
-    cout << "Dificultad invalida. Seleccione 1, 2, 3 o 4: ";
-    dificultad = leerEntero();
 }
 ```
 
-**Cambio 3:** en `obtenerCantidadIntentos`:
+## Nivel 2
+
+### 5. Mostrar intentos usados en cada turno
+
+**Pedido:**
+
+> Muestra cuántos intentos ya utilizó el jugador.
+
+**Función:** `mostrarEstadoPartida`.
 
 ```cpp
-} else if (dificultad == 3) {
-    cantidadIntentos = 5;
-} else {
-    cantidadIntentos = 3;
+cout << "Intentos usados: " << intentosUsados << "\n";
+```
+
+### 6. Cambiar el comando de pistas a `9`
+
+**Pedido:**
+
+> Usa `9` en vez de `0` para abrir pistas.
+
+**Funciones:** `pedirCodigoOComando`, `jugar`, mensajes e instrucciones.
+
+Cambiar:
+
+```cpp
+codigoOComando != 9
+codigoOComando == 9
+```
+
+Y actualizar los textos visibles.
+
+### 7. Hacer que pedir una pista consuma un intento
+
+**Pedido:**
+
+> Cada pista debe consumir un intento.
+
+**Función:** `jugar`.
+
+Después de mostrar una pista válida:
+
+```cpp
+if (mostrarPista(tipoPista, codigoSecreto, ultimoIntento)) {
+    pistasUsadas++;
+    intentosUsados++;
 }
 ```
 
-### Modificación 7: rechazar códigos que contengan cero
+### 8. Rechazar códigos que contienen cero
 
-**Posible pedido:**
+**Pedido:**
 
-> El intento ya no puede contener el dígito cero.
+> Un código como `102` debe ser inválido.
 
-**Cambio 1:** añadir prototipo:
+**Cambio 1:** prototipo:
 
 ```cpp
 bool contieneCero(int numero);
 ```
 
-**Cambio 2:** añadir definición:
+**Cambio 2:** definición:
 
 ```cpp
 bool contieneCero(int numero) {
@@ -145,7 +139,7 @@ bool contieneCero(int numero) {
 }
 ```
 
-**Cambio 3:** actualizar `esIntentoValido`:
+**Cambio 3:** validación:
 
 ```cpp
 return tieneTresDigitos(numero)
@@ -153,171 +147,95 @@ return tieneTresDigitos(numero)
     && contieneCero(numero) == false;
 ```
 
-**Qué demostrar:** `102` debe rechazarse.
+## Nivel 3
 
-### Modificación 8: otorgar un bono al ganar en el primer intento
+### 9. Añadir pista de cantidad de impares
 
-**Posible pedido:**
+**Pedido:**
 
-> Si el jugador gana en el primer intento, suma 200 puntos.
+> Añade una pista que muestre cuántos dígitos impares tiene el secreto.
 
-**Dónde modificar:** dentro del bloque de victoria en `jugar`.
+**Cambio 1:** prototipo:
 
 ```cpp
-int puntaje = calcularPuntaje(intentosRestantes, dificultad);
-
-if (intentosUsados == 1) {
-    puntaje = puntaje + 200;
-}
+int contarDigitosImpares(int numero);
 ```
 
-## Nivel 3: cambios que exigen entender la lógica
-
-### Modificación 9: mostrar la suma de los dígitos del código al perder
-
-**Posible pedido:**
-
-> Cuando el jugador pierda, muestra también la suma de los dígitos del código secreto.
-
-**Cambio 1:** añadir prototipo:
+**Cambio 2:** definición:
 
 ```cpp
-int sumarDigitos(int numero);
-```
-
-**Cambio 2:** añadir definición:
-
-```cpp
-int sumarDigitos(int numero) {
-    int suma = 0;
+int contarDigitosImpares(int numero) {
+    int cantidadImpares = 0;
 
     while (numero > 0) {
-        suma = suma + numero % 10;
-        numero = numero / 10;
-    }
-
-    return suma;
-}
-```
-
-**Cambio 3:** dentro del bloque de derrota:
-
-```cpp
-cout << "Suma de sus digitos: " << sumarDigitos(codigoSecreto) << "\n";
-```
-
-**Tema evaluado:** `% 10`, `/ 10`, acumulador y `while`.
-
-### Modificación 10: contar cuántos intentos inválidos ingresó el jugador
-
-**Posible pedido:**
-
-> Muestra cuántos códigos inválidos escribió el jugador antes de ingresar uno válido.
-
-**Versión simple:** resolver dentro de `pedirIntento`.
-
-```cpp
-int pedirIntento() {
-    int intento = 0;
-    int intentosInvalidos = 0;
-
-    cout << "Ingrese un codigo de 3 digitos sin repetir: ";
-    intento = leerEntero();
-
-    while (esIntentoValido(intento) == false) {
-        intentosInvalidos++;
-        cout << "Codigo invalido. Ingrese 3 digitos diferentes: ";
-        intento = leerEntero();
-    }
-
-    cout << "Codigos invalidos ingresados: " << intentosInvalidos << "\n";
-
-    return intento;
-}
-```
-
-### Modificación 11: mostrar si el intento contiene algún dígito par
-
-**Posible pedido:**
-
-> Después de fallar, indica si el intento contiene al menos un dígito par.
-
-**Cambio 1:** añadir prototipo:
-
-```cpp
-bool contieneDigitoPar(int numero);
-```
-
-**Cambio 2:** añadir definición:
-
-```cpp
-bool contieneDigitoPar(int numero) {
-    bool contienePar = false;
-
-    while (numero > 0 && contienePar == false) {
         int digito = numero % 10;
         numero = numero / 10;
 
-        if (digito % 2 == 0) {
-            contienePar = true;
+        if (digito % 2 != 0) {
+            cantidadImpares++;
         }
     }
 
-    return contienePar;
+    return cantidadImpares;
 }
 ```
 
-**Cambio 3:** usar la función dentro del `else` de `jugar`.
+**Cambio 3:** añadir opción en `mostrarMenuPistas`.
+
+**Cambio 4:** aceptar el nuevo rango en `pedirTipoPista`.
+
+**Cambio 5:** manejar la opción en `mostrarPista`.
+
+### 10. Descontar puntos por cada pista
+
+**Pedido:**
+
+> Cada pista mostrada debe restar 25 puntos.
+
+**Cambio 1:** prototipo:
 
 ```cpp
-if (contieneDigitoPar(intento)) {
-    cout << "El intento contiene al menos un digito par.\n";
-}
+int calcularPuntaje(int intentosUsados, int pistasUsadas);
 ```
 
-### Modificación 12: hacer que los intentos inválidos consuman oportunidades
-
-**Posible pedido:**
-
-> Cada código inválido también debe consumir un intento.
-
-Este cambio es más delicado porque actualmente `pedirIntento` repite internamente hasta obtener un valor válido. Primero explica esa situación al profesor.
-
-Una solución simple consiste en pedir una sola vez dentro de `jugar` y decidir allí si se muestran pistas:
+**Cambio 2:** definición:
 
 ```cpp
-cout << "Ingrese un codigo de 3 digitos sin repetir: ";
-intento = leerEntero();
-intentosUsados++;
+int calcularPuntaje(int intentosUsados, int pistasUsadas) {
+    int puntaje = 1100 - intentosUsados * 100 - pistasUsadas * 25;
 
-if (esIntentoValido(intento) == false) {
-    cout << "Codigo invalido. El intento fue consumido.\n";
-} else if (intento == codigoSecreto) {
-    gano = true;
-} else {
-    // calcular y mostrar pistas
+    if (puntaje < 0) {
+        puntaje = 0;
+    }
+
+    return puntaje;
 }
 ```
 
-Para practicar esta variante, trabaja en una copia temporal del archivo. No la apliques permanentemente antes de la presentación.
+**Cambio 3:** llamada:
 
-## Ejercicios con cronómetro
+```cpp
+calcularPuntaje(intentosUsados, pistasUsadas)
+```
 
-Practica en este orden:
+### 11. Contar códigos inválidos
 
-| Sesión | Cambios | Meta |
-| :--- | :--- | :--- |
-| 1 | 1, 2, 3 y 4 | Menos de 3 minutos cada uno. |
-| 2 | 5, 6, 7 y 8 | Menos de 5 minutos cada uno. |
-| 3 | 9, 10 y 11 | Menos de 7 minutos al principio; luego menos de 5. |
-| 4 | Elegir uno al azar | Menos de 5 minutos incluyendo compilación y prueba. |
+**Pedido:**
 
-## Plantilla mental para crear una función nueva
+> Muestra cuántos códigos inválidos escribió el jugador.
 
-1. Definir qué dato entra.
-2. Definir qué resultado sale.
-3. Añadir prototipo arriba de `main`.
-4. Añadir definición debajo de `main`.
-5. Llamar la función desde el lugar correcto.
-6. Compilar.
-7. Ejecutar un caso que demuestre el cambio.
+Una solución clara requiere:
+
+1. Crear `int codigosInvalidos = 0`.
+2. Incrementarlo cuando `esCodigoValido` sea falso.
+3. Mostrarlo en el resumen.
+
+Este cambio es más largo porque actualmente la validación está encapsulada en `pedirCodigoOComando`. Practícalo después de dominar los cambios anteriores.
+
+## Registro
+
+| Fecha | Modificación | Tiempo | ¿Compiló? | ¿La expliqué? |
+| :--- | :--- | :--- | :--- | :--- |
+| | | | | |
+| | | | | |
+| | | | | |
