@@ -2,60 +2,47 @@
 
 ## 1. Objetivo
 
-Código Secreto es un juego de consola. El jugador debe descubrir un número oculto de tres dígitos diferentes.
+El jugador debe descubrir un código secreto de tres dígitos diferentes.
 
-Antes de comenzar, el jugador define cuántos intentos desea tener. Durante la partida puede ingresar un código o escribir `0` para abrir un menú de pistas.
+Después de cada intento incorrecto, el programa muestra:
 
-El proyecto está pensado para demostrar lógica básica de Introducción a la Programación sin usar arrays ni bibliotecas adicionales.
+- Cuántos dígitos son correctos y están bien ubicados.
+- Cuántos dígitos son correctos, pero están en otra posición.
 
-## 2. Reglas del juego
+Si necesita ayuda adicional, el jugador puede usar `-1`, `-2` o `-3`.
 
-1. El código secreto contiene exactamente tres dígitos diferentes.
-2. Cada intento también debe tener tres dígitos diferentes.
-3. Un código inválido no consume un intento.
-4. El comando `0` abre el menú de pistas.
-5. Pedir una pista no consume un intento.
-6. El jugador gana cuando ingresa exactamente el código secreto.
-7. El puntaje depende de cuántos intentos utilizó para ganar.
+## 2. Reglas
 
-## 3. Temas de programación aplicados
+1. El código tiene exactamente tres dígitos diferentes.
+2. El jugador elige cuántos intentos quiere tener.
+3. Un código inválido no consume intentos.
+4. Un comando de pista extra tampoco consume intentos.
+5. El jugador gana al ingresar exactamente el código secreto.
 
-| Tema | Uso dentro del proyecto |
-| :--- | :--- |
-| Variables | Guardan opciones, intentos, pistas y códigos. |
-| `if`, `else if`, `else` | Controlan decisiones. |
-| `while` | Repiten validaciones y procesos que dependen de una condición. |
-| `do while` | Repite el menú principal al menos una vez. |
-| `for` | Compara exactamente las tres posiciones del código. |
-| `% 10` | Extrae el último dígito de un número. |
-| `/ 10` | Elimina el último dígito de un número entero. |
-| Funciones | Separan el programa en tareas pequeñas y entendibles. |
-| `bool` | Representa respuestas de verdadero o falso. |
-
-## 4. Organización de `codigo.cpp`
-
-El archivo está ordenado para facilitar su lectura:
+## 3. Organización de `codigo.cpp`
 
 ```text
-1. Inclusión de <iostream>
-2. Prototipos agrupados por propósito
+1. Biblioteca <iostream>
+2. Prototipos de funciones
 3. Función main
-4. Funciones para trabajar con dígitos
-5. Funciones para interactuar con el jugador
-6. Funciones para controlar pistas y partida
+4. Funciones que procesan dígitos
+5. Funciones que interactúan con el jugador
+6. Funciones que controlan la partida
 ```
 
-### Prototipo
-
-Un prototipo anuncia que una función existirá:
+El prototipo anuncia una función:
 
 ```cpp
 int sumarDigitos(int numero);
 ```
 
-### Definición
+La llamada ejecuta la función:
 
-La definición contiene la lógica completa:
+```cpp
+sumarDigitos(codigoSecreto)
+```
+
+La definición contiene su lógica:
 
 ```cpp
 int sumarDigitos(int numero) {
@@ -71,53 +58,21 @@ int sumarDigitos(int numero) {
 }
 ```
 
-### Llamada
+## 4. Procesar dígitos sin arrays
 
-Una llamada ejecuta la función:
-
-```cpp
-sumarDigitos(codigoSecreto)
-```
-
-## 5. Flujo principal
-
-La función `main`:
-
-1. Muestra el menú.
-2. Lee una opción válida.
-3. Inicia una partida o muestra instrucciones.
-4. Repite el menú mientras el usuario no elija salir.
-5. Muestra un mensaje de despedida.
-
-Se usa `do while` porque el menú debe aparecer al menos una vez.
-
-## 6. Procesar dígitos sin arrays
-
-### Extraer el último dígito
+Para extraer el último dígito:
 
 ```cpp
 digito = numero % 10;
 ```
 
-Ejemplo:
-
-```text
-527 % 10 = 7
-```
-
-### Eliminar el último dígito
+Para eliminar el último dígito:
 
 ```cpp
 numero = numero / 10;
 ```
 
-Ejemplo usando división entera:
-
-```text
-527 / 10 = 52
-```
-
-### Recorrido completo
+Ejemplo:
 
 | Paso | Número antes | Dígito extraído | Número después |
 | :--- | ---: | ---: | ---: |
@@ -125,29 +80,20 @@ Ejemplo usando división entera:
 | 2 | `52` | `2` | `5` |
 | 3 | `5` | `5` | `0` |
 
-## 7. Funciones para trabajar con dígitos
+## 5. Funciones de dígitos
 
 | Función | Responsabilidad |
 | :--- | :--- |
 | `tieneTresDigitos` | Comprueba que el número esté entre `100` y `999`. |
 | `existeDigito` | Busca un dígito dentro de un número. |
-| `tieneDigitosRepetidos` | Detecta si un dígito aparece más de una vez. |
-| `esCodigoValido` | Exige tres dígitos diferentes. |
-| `contarDigitosBienUbicados` | Cuenta coincidencias de valor y posición. |
-| `contarDigitosMalUbicados` | Cuenta coincidencias que están en otra posición. |
-| `contarDigitosPares` | Cuenta cuántos dígitos son divisibles entre `2`. |
-| `sumarDigitos` | Suma todos los dígitos de un número. |
+| `tieneDigitosRepetidos` | Detecta repeticiones. |
+| `esCodigoValido` | Exige exactamente tres dígitos diferentes. |
+| `contarDigitosBienUbicados` | Compara las tres posiciones. |
+| `contarDigitosMalUbicados` | Cuenta coincidencias ubicadas en otra posición. |
+| `contarDigitosPares` | Cuenta dígitos divisibles entre `2`. |
+| `sumarDigitos` | Suma todos los dígitos. |
 
-### Ejemplo de repetición
-
-Para validar `551`:
-
-1. Extrae `1` y lo busca dentro de `55`.
-2. Extrae `5` y lo busca dentro de `5`.
-3. Encuentra otro `5`.
-4. Retorna `true`: el código tiene dígitos repetidos.
-
-### Ejemplo de posiciones
+## 6. Ejemplo de las pistas automáticas
 
 Código secreto:
 
@@ -161,140 +107,74 @@ Intento:
 572
 ```
 
-| Posición | Secreto | Intento | Resultado |
-| :--- | ---: | ---: | :--- |
-| Centenas | `5` | `5` | Bien ubicado. |
-| Decenas | `2` | `7` | Mal ubicado. |
-| Unidades | `7` | `2` | Mal ubicado. |
-
 Resultado:
 
 ```text
 Bien ubicados: 1
-Mal ubicados: 2
+Correctos en otra posicion: 2
 ```
 
-## 8. Funciones para interactuar con el jugador
+El `5` está bien ubicado. El `7` y el `2` existen, pero están intercambiados.
 
-| Función | Responsabilidad |
-| :--- | :--- |
-| `leerEntero` | Lee números y se recupera si el usuario escribe texto. |
-| `mostrarMenuPrincipal` | Muestra jugar, instrucciones y salir. |
-| `pedirOpcionMenuPrincipal` | Acepta únicamente opciones entre `1` y `3`. |
-| `mostrarInstrucciones` | Explica cómo jugar. |
-| `pedirCantidadIntentos` | Permite elegir entre `1` y `20` intentos. |
-| `pedirCodigoOComando` | Acepta un código válido o el comando `0`. |
-| `mostrarErrorCodigo` | Explica por qué un código fue rechazado. |
-| `mostrarEstadoPartida` | Informa intentos restantes, pistas usadas y comando disponible. |
+## 7. Pistas extra
 
-## 9. Códigos secretos predefinidos
+| Comando | Resultado con código `527` |
+| ---: | :--- |
+| `-1` | La suma es `14`. |
+| `-2` | Existe `1` dígito par. |
+| `-3` | El código es mayor que `500`. |
 
-La función `elegirCodigoSecreto` alterna cinco posibilidades:
+Los comandos negativos no pueden confundirse con un código válido.
 
-| Número de partida | Selector `numeroPartida % 5` | Código |
-| ---: | ---: | ---: |
-| `1` | `1` | `527` |
-| `2` | `2` | `731` |
-| `3` | `3` | `864` |
-| `4` | `4` | `392` |
-| `5` | `0` | `615` |
+## 8. Elegir códigos secretos
 
-Después comienza nuevamente el ciclo.
+La función `elegirCodigoSecreto` alterna cinco códigos predefinidos:
 
-Esta estrategia evita bibliotecas adicionales y sigue siendo suficiente para una demostración académica.
+| Partida | Código |
+| ---: | ---: |
+| `1` | `527` |
+| `2` | `731` |
+| `3` | `864` |
+| `4` | `392` |
+| `5` | `615` |
 
-## 10. Menú de pistas
+Después vuelve a comenzar.
 
-El jugador escribe `0` durante cualquier turno.
-
-| Opción | Resultado | ¿Necesita un intento previo? |
-| ---: | :--- | :--- |
-| `1` | Cantidad de dígitos bien ubicados. | Sí |
-| `2` | Cantidad de dígitos correctos en otra posición. | Sí |
-| `3` | Cantidad de dígitos pares del código secreto. | No |
-| `4` | Suma de los dígitos del código secreto. | No |
-| `5` | Informa si el código secreto es mayor o menor que `500`. | No |
-| `6` | Regresa sin mostrar pista. | No |
-
-La función `mostrarPista` devuelve un valor `bool`:
-
-- `true`: mostró una pista y debe incrementar el contador.
-- `false`: no mostró una pista útil.
-
-## 11. Puntaje
-
-```cpp
-puntaje = 1100 - intentosUsados * 100;
-```
-
-El puntaje depende solamente de los intentos usados. Elegir más intentos al configurar la partida no aumenta artificialmente el puntaje.
-
-Si el resultado es negativo, se reemplaza por `0`.
-
-## 12. Flujo de una partida
+## 9. Flujo de una partida
 
 ```mermaid
 flowchart TD
-    A([Inicio de partida]) --> B[/Elegir cantidad de intentos/]
+    A([Inicio]) --> B[/Elegir cantidad de intentos/]
     B --> C[Elegir código secreto]
-    C --> D[Inicializar contadores]
-    D --> E{¿Quedan intentos<br/>y todavía no ganó?}
-    E -- No --> N{¿Ganó?}
-    E -- Sí --> F[/Leer código o comando 0/]
-    F --> G{¿Escribió 0?}
-    G -- Sí --> H[/Elegir tipo de pista/]
-    H --> I[Mostrar pista si corresponde]
-    I --> E
-    G -- No --> J[Guardar intento<br/>e incrementar contador]
-    J --> K{¿Adivinó el código?}
-    K -- Sí --> L[gano = true]
-    K -- No --> M[Mostrar mensaje para continuar]
-    L --> E
-    M --> E
-    N -- Sí --> O[/Mostrar victoria y puntaje/]
-    N -- No --> P[/Mostrar derrota y código secreto/]
-    O --> Q([Fin])
-    P --> Q
+    C --> D{¿Quedan intentos<br/>y todavía no ganó?}
+    D -- No --> K{¿Ganó?}
+    D -- Sí --> E[/Leer código o comando negativo/]
+    E --> F{¿Es comando?}
+    F -- Sí --> G[Mostrar pista extra]
+    G --> D
+    F -- No --> H[Consumir intento]
+    H --> I{¿Adivinó?}
+    I -- Sí --> J[gano = true]
+    I -- No --> L[Mostrar pistas automáticas]
+    J --> D
+    L --> D
+    K -- Sí --> M[/Mostrar victoria/]
+    K -- No --> N[/Mostrar derrota/]
+    M --> O([Fin])
+    N --> O
 ```
 
-## 13. Pseudocódigo resumido
+## 10. Ciclos usados
 
-```text
-PROCEDIMIENTO jugar(numeroPartida)
-    cantidadIntentos = pedir cantidad de intentos
-    codigoSecreto = elegir código secreto
-    intentosUsados = 0
-    pistasUsadas = 0
-    ultimoIntento = 0
-    gano = falso
+| Ciclo | Uso |
+| :--- | :--- |
+| `do while` | Mostrar el menú principal al menos una vez. |
+| `while` | Repetir la partida y recorrer dígitos. |
+| `for` | Comparar exactamente tres posiciones. |
 
-    MIENTRAS quedan intentos Y no ganó
-        mostrar estado
-        codigoOComando = pedir código o comando
-
-        SI codigoOComando == 0 ENTONCES
-            pedir tipo de pista
-            mostrar pista si corresponde
-        SINO
-            guardar último intento
-            incrementar intentos usados
-
-            SI adivinó el código ENTONCES
-                gano = verdadero
-            SINO
-                invitar a intentar nuevamente o pedir una pista
-            FIN SI
-        FIN SI
-    FIN MIENTRAS
-
-    mostrar victoria o derrota
-FIN PROCEDIMIENTO
-```
-
-## 14. Compilar y ejecutar
+## 11. Compilar
 
 ```bash
-mkdir -p build
 g++ -std=c++17 -Wall -Wextra -pedantic codigo.cpp -o build/codigo_secreto
 ./build/codigo_secreto
 ```

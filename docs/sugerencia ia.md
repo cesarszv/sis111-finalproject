@@ -1,71 +1,52 @@
-# Código Secreto: alcance implementado
+# Código Secreto: decisiones de diseño
 
-## 1. Concepto
+## Concepto
 
-Código Secreto es un juego de consola escrito en C++. El jugador debe descubrir un número oculto de tres dígitos diferentes.
+Código Secreto es un juego de deducción en consola. El jugador intenta descubrir un número de tres dígitos diferentes.
 
-La versión implementada busca ser:
+## Decisiones finales
 
-- Fácil de jugar.
-- Fácil de explicar desde cero.
-- Compatible con los contenidos de Introducción a la Programación.
-- Comprensible sin arrays, clases ni bibliotecas adicionales.
+### Pistas automáticas
 
-## 2. Experiencia del jugador
+Después de cada intento incorrecto se muestran las dos pistas esenciales:
 
-1. El jugador inicia una partida.
-2. Define cuántos intentos quiere tener: entre `1` y `20`.
-3. Ingresa códigos de tres dígitos diferentes.
-4. Puede escribir `0` durante cualquier turno para pedir una pista.
-5. Continúa hasta ganar o quedarse sin intentos.
+- Dígitos bien ubicados.
+- Dígitos correctos en otra posición.
 
-## 3. Pistas disponibles
+Estas pistas son el centro del juego. El usuario no debe solicitarlas manualmente.
 
-El jugador decide qué información necesita:
+### Comandos directos
 
-1. Cantidad de dígitos bien ubicados en el último intento.
-2. Cantidad de dígitos correctos que están en otra posición.
-3. Cantidad de dígitos pares del código secreto.
-4. Suma de los dígitos del código secreto.
-5. Si el código es mayor o menor que `500`.
+Si necesita más ayuda, puede escribir:
 
-También puede volver a la partida sin pedir una pista.
+| Comando | Resultado |
+| ---: | :--- |
+| `-1` | Suma de dígitos. |
+| `-2` | Cantidad de pares. |
+| `-3` | Comparación con `500`. |
 
-## 4. Razones de diseño
+No existe un submenú de pistas. Los comandos directos reducen pasos innecesarios.
+
+### Sin puntaje
+
+La versión final no usa puntaje. La victoria ya se entiende con la cantidad de intentos usados. Retirar esa fórmula reduce reglas secundarias.
 
 ### Intentos configurables
 
-El juego ya no impone dificultades predefinidas. El jugador decide cuántas oportunidades necesita. La recomendación visible en consola es usar `7`.
+El jugador elige entre `1` y `20` intentos. Esto permite ajustar la dificultad sin añadir niveles artificiales.
 
-### Comando de pistas
-
-El comando `0` es fácil de recordar y no puede confundirse con un código válido de tres dígitos.
-
-### Puntaje independiente de la configuración
-
-El puntaje depende de los intentos usados:
-
-```cpp
-puntaje = 1100 - intentosUsados * 100;
-```
-
-Elegir más intentos no aumenta el puntaje.
-
-## 5. Relación con las lecciones
+## Relación con las lecciones
 
 | Tema | Aplicación |
 | :--- | :--- |
-| Condicionales | Validar opciones y elegir comportamientos. |
-| `while` | Repetir validaciones y búsquedas. |
-| `do while` | Repetir el menú principal. |
-| `for` | Comparar exactamente tres posiciones. |
-| `% 10` | Extraer el último dígito. |
-| `/ 10` | Eliminar el último dígito. |
-| Funciones | Mantener responsabilidades pequeñas y claras. |
-| Contadores | Registrar intentos y pistas. |
+| Condicionales | Validar opciones y códigos. |
+| `while` | Repetir validaciones y recorrer números. |
+| `do while` | Repetir menú principal. |
+| `for` | Comparar tres posiciones. |
+| `% 10` | Extraer último dígito. |
+| `/ 10` | Eliminar último dígito. |
+| Funciones | Separar responsabilidades. |
 
-## 6. Alcance final
+## Alcance
 
-El proyecto evita agregar una segunda fase compleja. La prioridad es presentar una base funcional, clara y defendible técnicamente.
-
-El código completo está en [`../codigo.cpp`](../codigo.cpp) y su explicación detallada está en [`../codigo.md`](../codigo.md).
+El proyecto prioriza una mecánica pequeña, entendible y defendible. No utiliza arrays, clases ni bibliotecas adicionales.

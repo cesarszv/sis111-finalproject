@@ -5,77 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hoja de entrega - Código Secreto</title>
     <style>
-        @page {
-            size: A4;
-            margin: 2.2cm;
-        }
-
-        body {
-            color: #111;
-            font-family: Arial, sans-serif;
-            font-size: 12pt;
-            line-height: 1.55;
-            margin: 0;
-        }
-
-        h1 {
-            font-size: 18pt;
-            margin: 0 0 28px;
-            text-align: center;
-        }
-
-        p {
-            margin: 0 0 16px;
-            text-align: justify;
-        }
-
-        .field {
-            margin-bottom: 18px;
-        }
-
-        .warning {
-            color: #a00;
-            font-size: 10pt;
-            margin-bottom: 20px;
-        }
-
-        @media print {
-            .warning {
-                display: none;
-            }
-        }
+        @page { size: A4; margin: 2.2cm; }
+        body { color: #111; font-family: Arial, sans-serif; font-size: 12pt; line-height: 1.55; }
+        h1 { font-size: 18pt; margin-bottom: 28px; text-align: center; }
+        p { margin-bottom: 16px; text-align: justify; }
+        .warning { color: #a00; font-size: 10pt; }
+        @media print { .warning { display: none; } }
     </style>
 </head>
 <body>
-    <p class="warning">
-        Antes de imprimir: reemplazar [COMPLETAR: nombre completo] por el nombre oficial del estudiante.
-    </p>
-
+    <p class="warning">Reemplazar [COMPLETAR: nombre completo] antes de imprimir.</p>
     <h1>Entrega del proyecto final</h1>
-
-    <p class="field"><strong>Nombre del estudiante:</strong> [COMPLETAR: nombre completo]</p>
-
-    <p class="field"><strong>Título del proyecto:</strong> Código Secreto</p>
-
+    <p><strong>Nombre del estudiante:</strong> [COMPLETAR: nombre completo]</p>
+    <p><strong>Título del proyecto:</strong> Código Secreto</p>
     <p><strong>Descripción del proyecto:</strong></p>
-
     <p>
         Código Secreto es un juego de consola desarrollado en C++. El jugador debe descubrir un número
-        oculto de tres dígitos diferentes antes de agotar sus intentos. Al comenzar, puede elegir cuántas
-        oportunidades desea tener.
+        oculto de tres dígitos diferentes antes de agotar sus intentos.
     </p>
-
     <p>
-        Durante la partida, el usuario ingresa códigos o escribe 0 para abrir un menú de pistas. Puede
-        solicitar información sobre su último intento, conocer cuántos dígitos pares contiene el código
-        secreto, obtener la suma de sus dígitos o saber si es mayor o menor que 500.
+        Después de cada intento incorrecto, el programa muestra cuántos dígitos son correctos y están bien
+        ubicados, y cuántos existen en otra posición. El jugador también puede solicitar pistas extra
+        mediante comandos simples.
     </p>
-
     <p>
-        El proyecto aplica lógica básica de programación: variables, condicionales, ciclos while,
-        do while y for, funciones, validación de entradas y manipulación matemática de dígitos mediante
-        % 10 y / 10. Todo el código está contenido en un solo archivo fuente y no utiliza arrays ni
-        bibliotecas adicionales.
+        El proyecto aplica variables, condicionales, ciclos while, do while y for, funciones, validación
+        de entradas y manipulación matemática de dígitos con % 10 y / 10. Todo el código está contenido
+        en un solo archivo fuente y no utiliza arrays ni bibliotecas adicionales.
     </p>
 </body>
 </html>

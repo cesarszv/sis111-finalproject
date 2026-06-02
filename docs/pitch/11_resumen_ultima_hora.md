@@ -1,106 +1,53 @@
 # Resumen de última hora
 
-## Proyecto
+## Mecánica
 
-Código Secreto es un juego de consola para descubrir un número oculto de tres dígitos diferentes.
-
-El jugador elige cuántos intentos tendrá y escribe `0` cuando quiere pedir una pista.
+- Descubrir un código de tres dígitos diferentes.
+- Recibir pistas automáticas después de fallar.
+- Usar `-1`, `-2` o `-3` para ayuda extra.
 
 ## Fórmulas
 
 ```cpp
-digito = numero % 10; // extraer último dígito
-numero = numero / 10; // eliminar último dígito
+digito = numero % 10;
+numero = numero / 10;
 ```
 
 ```cpp
 malUbicados = existentes - bienUbicados;
 ```
 
-```cpp
-puntaje = 1100 - intentosUsados * 100;
-```
+## Comandos
 
-```cpp
-selector = numeroPartida % 5;
-```
+| Comando | Pista |
+| ---: | :--- |
+| `-1` | Suma. |
+| `-2` | Pares. |
+| `-3` | Mayor o menor que `500`. |
 
-## Ciclos
+## Respuestas rápidas
 
-| Ciclo | Uso |
-| :--- | :--- |
-| `for` | Comparar exactamente tres posiciones. |
-| `while` | Repetir según condición. |
-| `do while` | Mostrar menú al menos una vez. |
+**¿Por qué negativos?**
 
-## Operadores
+No se confunden con códigos válidos.
 
-| Operador | Significado |
-| :--- | :--- |
-| `=` | Asignar. |
-| `==` | Comparar. |
-| `!=` | Diferente. |
-| `&&` | Ambas condiciones. |
-| `||` | Al menos una condición. |
-| `%` | Residuo. |
+**¿Por qué `for`?**
 
-## Funciones esenciales
+Comparo exactamente tres posiciones.
 
-| Función | Qué hace |
-| :--- | :--- |
-| `esCodigoValido` | Exige tres dígitos diferentes. |
-| `existeDigito` | Busca un dígito. |
-| `contarDigitosBienUbicados` | Compara posiciones. |
-| `contarDigitosMalUbicados` | Resta coincidencias bien ubicadas. |
-| `contarDigitosPares` | Cuenta pares. |
-| `sumarDigitos` | Suma dígitos. |
-| `mostrarPista` | Ejecuta el tipo de pista elegido. |
-| `jugar` | Coordina una partida. |
+**¿Por qué `while`?**
 
-## Comando
+Repito mientras una condición sea verdadera.
 
-```text
-0 = abrir menú de pistas
-```
+**¿Por qué no arrays?**
 
-No consume intentos.
+Proceso dígitos con `% 10` y `/ 10`.
 
 ## Ejemplo
 
 ```text
 Secreto: 527
 Intento: 572
-```
-
-```text
 Bien ubicados: 1
-Mal ubicados: 2
-Pares del secreto: 1
-Suma: 14
-Mayor que 500: sí
-```
-
-## Respuestas rápidas
-
-**¿Por qué `0`?**
-
-No se confunde con un código válido de tres dígitos.
-
-**¿Por qué puntaje según usados?**
-
-El jugador configura el máximo. Premiar restantes sería injusto.
-
-**¿Por qué `mostrarPista` devuelve `bool`?**
-
-Para contar solamente pistas realmente mostradas.
-
-**¿Por qué no arrays?**
-
-Proceso números matemáticamente con `% 10` y `/ 10`.
-
-## Compilar
-
-```bash
-g++ -std=c++17 -Wall -Wextra -pedantic codigo.cpp -o build/codigo_secreto
-./build/codigo_secreto
+Correctos en otra posicion: 2
 ```

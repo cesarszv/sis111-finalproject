@@ -2,136 +2,58 @@
 
 ## Método
 
-1. Escuchar el pedido completo.
-2. Repetirlo con tus palabras.
-3. Identificar la función responsable.
-4. Cambiar únicamente lo necesario.
-5. Compilar.
-6. Probar el caso mínimo.
+1. Repetir el pedido con tus palabras.
+2. Identificar la función responsable.
+3. Cambiar lo mínimo.
+4. Compilar.
+5. Probar.
 
 ```bash
 g++ -std=c++17 -Wall -Wextra -pedantic codigo.cpp -o build/codigo_secreto
 ```
 
-Practica en una copia temporal y vuelve al código oficial después de cada ejercicio.
+## Nivel fácil
 
-## Nivel 1
+### Permitir hasta `30` intentos
 
-### 1. Permitir hasta 30 intentos
-
-**Pedido:**
-
-> Permite que el jugador elija hasta 30 intentos.
-
-**Función:** `pedirCantidadIntentos`.
-
-Cambiar mensajes y condición:
+Modificar `pedirCantidadIntentos`:
 
 ```cpp
 while (cantidadIntentos < 1 || cantidadIntentos > 30)
 ```
 
-### 2. Cambiar recomendación a 10 intentos
+### Cambiar el primer secreto
 
-**Pedido:**
-
-> Recomienda 10 intentos para principiantes.
-
-**Función:** `pedirCantidadIntentos`.
+Modificar `elegirCodigoSecreto`:
 
 ```cpp
-cout << "Recomendacion para principiantes: 10 intentos.\n";
+codigoSecreto = 942;
 ```
 
-### 3. Cambiar penalización del puntaje
+### Cambiar el límite de comparación
 
-**Pedido:**
-
-> Resta 75 puntos por intento usado.
-
-**Función:** `calcularPuntaje`.
-
-Para conservar `1000` puntos al ganar en el primer intento:
+Para preguntar si el secreto es mayor o menor que `600`, modificar textos y condición:
 
 ```cpp
-int puntaje = 1075 - intentosUsados * 75;
+codigoSecreto > 600
 ```
 
-### 4. Cambiar el primer código secreto
+## Nivel medio
 
-**Pedido:**
+### Hacer que una pista extra consuma intento
 
-> Cambia el primer código secreto por `942`.
-
-**Función:** `elegirCodigoSecreto`.
+En `jugar`:
 
 ```cpp
-if (selector == 1) {
-    codigoSecreto = 942;
-}
-```
-
-## Nivel 2
-
-### 5. Mostrar intentos usados en cada turno
-
-**Pedido:**
-
-> Muestra cuántos intentos ya utilizó el jugador.
-
-**Función:** `mostrarEstadoPartida`.
-
-```cpp
-cout << "Intentos usados: " << intentosUsados << "\n";
-```
-
-### 6. Cambiar el comando de pistas a `9`
-
-**Pedido:**
-
-> Usa `9` en vez de `0` para abrir pistas.
-
-**Funciones:** `pedirCodigoOComando`, `jugar`, mensajes e instrucciones.
-
-Cambiar:
-
-```cpp
-codigoOComando != 9
-codigoOComando == 9
-```
-
-Y actualizar los textos visibles.
-
-### 7. Hacer que pedir una pista consuma un intento
-
-**Pedido:**
-
-> Cada pista debe consumir un intento.
-
-**Función:** `jugar`.
-
-Después de mostrar una pista válida:
-
-```cpp
-if (mostrarPista(tipoPista, codigoSecreto, ultimoIntento)) {
-    pistasUsadas++;
+if (codigoOComando < 0) {
+    mostrarPistaExtra(codigoOComando, codigoSecreto);
     intentosUsados++;
 }
 ```
 
-### 8. Rechazar códigos que contienen cero
+### Rechazar códigos que contienen cero
 
-**Pedido:**
-
-> Un código como `102` debe ser inválido.
-
-**Cambio 1:** prototipo:
-
-```cpp
-bool contieneCero(int numero);
-```
-
-**Cambio 2:** definición:
+Añadir:
 
 ```cpp
 bool contieneCero(int numero) {
@@ -139,29 +61,21 @@ bool contieneCero(int numero) {
 }
 ```
 
-**Cambio 3:** validación:
+Y usarla desde `esCodigoValido`.
+
+### Añadir mensaje con intentos usados
+
+Dentro del ciclo de `jugar`:
 
 ```cpp
-return tieneTresDigitos(numero)
-    && tieneDigitosRepetidos(numero) == false
-    && contieneCero(numero) == false;
+cout << "Intentos usados: " << intentosUsados << "\n";
 ```
 
-## Nivel 3
+## Nivel avanzado
 
-### 9. Añadir pista de cantidad de impares
+### Añadir pista `-4`: cantidad de impares
 
-**Pedido:**
-
-> Añade una pista que muestre cuántos dígitos impares tiene el secreto.
-
-**Cambio 1:** prototipo:
-
-```cpp
-int contarDigitosImpares(int numero);
-```
-
-**Cambio 2:** definición:
+Crear:
 
 ```cpp
 int contarDigitosImpares(int numero) {
@@ -180,62 +94,17 @@ int contarDigitosImpares(int numero) {
 }
 ```
 
-**Cambio 3:** añadir opción en `mostrarMenuPistas`.
+Después:
 
-**Cambio 4:** aceptar el nuevo rango en `pedirTipoPista`.
-
-**Cambio 5:** manejar la opción en `mostrarPista`.
-
-### 10. Descontar puntos por cada pista
-
-**Pedido:**
-
-> Cada pista mostrada debe restar 25 puntos.
-
-**Cambio 1:** prototipo:
-
-```cpp
-int calcularPuntaje(int intentosUsados, int pistasUsadas);
-```
-
-**Cambio 2:** definición:
-
-```cpp
-int calcularPuntaje(int intentosUsados, int pistasUsadas) {
-    int puntaje = 1100 - intentosUsados * 100 - pistasUsadas * 25;
-
-    if (puntaje < 0) {
-        puntaje = 0;
-    }
-
-    return puntaje;
-}
-```
-
-**Cambio 3:** llamada:
-
-```cpp
-calcularPuntaje(intentosUsados, pistasUsadas)
-```
-
-### 11. Contar códigos inválidos
-
-**Pedido:**
-
-> Muestra cuántos códigos inválidos escribió el jugador.
-
-Una solución clara requiere:
-
-1. Crear `int codigosInvalidos = 0`.
-2. Incrementarlo cuando `esCodigoValido` sea falso.
-3. Mostrarlo en el resumen.
-
-Este cambio es más largo porque actualmente la validación está encapsulada en `pedirCodigoOComando`. Practícalo después de dominar los cambios anteriores.
+1. Añadir prototipo.
+2. Aceptar `-4` en `pedirCodigoOComando`.
+3. Mostrar la nueva pista en `mostrarPistaExtra`.
+4. Actualizar textos visibles.
 
 ## Registro
 
-| Fecha | Modificación | Tiempo | ¿Compiló? | ¿La expliqué? |
-| :--- | :--- | :--- | :--- | :--- |
-| | | | | |
-| | | | | |
-| | | | | |
+| Modificación | Tiempo | ¿Compiló? | ¿Pude explicarla? |
+| :--- | :--- | :--- | :--- |
+| | | | |
+| | | | |
+| | | | |
