@@ -2,9 +2,11 @@
 
 ## Mecánica
 
-- Descubrir un código de tres dígitos diferentes.
-- Recibir pistas automáticas después de fallar.
-- Usar `-1`, `-2` o `-3` para ayuda extra.
+- Descubrir un código de cinco dígitos diferentes.
+- Recibir una ayuda inicial gratis.
+- Elegir entre intentar, revelar, pedir pista o rendirse.
+- Completar el desafío final.
+- Recibir puntaje final.
 
 ## Fórmulas
 
@@ -17,23 +19,23 @@ numero = numero / 10;
 malUbicados = existentes - bienUbicados;
 ```
 
-## Comandos
+## Pistas
 
-| Comando | Pista |
+| Pista | Información |
 | ---: | :--- |
-| `-1` | Suma. |
-| `-2` | Pares. |
-| `-3` | Mayor o menor que `500`. |
+| `1` | Suma. |
+| `2` | Pares e impares. |
+| `3` | Mayor o menor que `50000`. |
 
 ## Respuestas rápidas
 
-**¿Por qué negativos?**
+**¿Por qué menú de turno?**
 
-No se confunden con códigos válidos.
+Es más claro que memorizar comandos.
 
 **¿Por qué `for`?**
 
-Comparo exactamente tres posiciones.
+Comparo exactamente cinco posiciones.
 
 **¿Por qué `while`?**
 
@@ -43,11 +45,16 @@ Repito mientras una condición sea verdadera.
 
 Proceso dígitos con `% 10` y `/ 10`.
 
+**¿Por qué puntaje?**
+
+Permite que el jugador elija dificultad: usar más ayudas baja el resultado.
+
 ## Ejemplo
 
 ```text
-Secreto: 527
-Intento: 572
-Bien ubicados: 1
-Correctos en otra posicion: 2
+Secreto: 58274
+Intento: 12345
+Lugares exactos: 0
+Correctos en otro lugar: 3
+Clave final: 87452
 ```

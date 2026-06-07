@@ -13,11 +13,11 @@ También se debe entregar una sola hoja, sin carátula.
 
 ## Mecánica actual
 
-1. El jugador elige cuántos intentos tendrá.
-2. Ingresa códigos de tres dígitos diferentes.
-3. Después de cada error recibe pistas automáticas.
-4. Puede pedir ayuda extra con `-1`, `-2` o `-3`.
-5. Gana al descubrir el código.
+1. El jugador elige entre `5` y `20` intentos.
+2. Recibe gratis un dígito con su posición.
+3. En cada turno puede intentar, revelar, pedir pista o rendirse.
+4. Si descubre el código, resuelve un desafío final.
+5. El juego calcula puntaje según intentos y ayudas usadas.
 
 ## Orden de estudio
 

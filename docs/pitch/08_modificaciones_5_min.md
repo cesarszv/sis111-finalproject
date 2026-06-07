@@ -14,41 +14,42 @@ g++ -std=c++17 -Wall -Wextra -pedantic codigo.cpp -o build/codigo_secreto
 
 ## Nivel fácil
 
-### Permitir hasta `30` intentos
+### Permitir hasta `25` intentos
 
 Modificar `pedirCantidadIntentos`:
 
 ```cpp
-while (cantidadIntentos < 1 || cantidadIntentos > 30)
+while (cantidadIntentos < 5 || cantidadIntentos > 25)
 ```
+
+También actualizar el texto visible.
 
 ### Cambiar el primer secreto
 
 Modificar `elegirCodigoSecreto`:
 
 ```cpp
-codigoSecreto = 942;
+codigoSecreto = 58274;
 ```
+
+El nuevo código debe tener cinco dígitos diferentes.
 
 ### Cambiar el límite de comparación
 
-Para preguntar si el secreto es mayor o menor que `600`, modificar textos y condición:
+Para preguntar si el secreto es mayor o menor que `60000`, modificar textos y condición:
 
 ```cpp
-codigoSecreto > 600
+codigoSecreto > 60000
 ```
 
 ## Nivel medio
 
-### Hacer que una pista extra consuma intento
+### Hacer que una pista reste más puntaje
 
-En `jugar`:
+Modificar `calcularPuntaje`:
 
 ```cpp
-if (codigoOComando < 0) {
-    mostrarPistaExtra(codigoOComando, codigoSecreto);
-    intentosUsados++;
-}
+puntaje = puntaje - (pistasPedidas * 10);
 ```
 
 ### Rechazar códigos que contienen cero
@@ -63,43 +64,26 @@ bool contieneCero(int numero) {
 
 Y usarla desde `esCodigoValido`.
 
-### Añadir mensaje con intentos usados
+### Cambiar la ayuda inicial
 
-Dentro del ciclo de `jugar`:
+Modificar `revelarDigito` cuando `numeroRevelacion == 0`:
 
 ```cpp
-cout << "Intentos usados: " << intentosUsados << "\n";
+int posicion = 2;
 ```
 
 ## Nivel avanzado
 
-### Añadir pista `-4`: cantidad de impares
+### Añadir una cuarta pista
 
-Crear:
-
-```cpp
-int contarDigitosImpares(int numero) {
-    int cantidadImpares = 0;
-
-    while (numero > 0) {
-        int digito = numero % 10;
-        numero = numero / 10;
-
-        if (digito % 2 != 0) {
-            cantidadImpares++;
-        }
-    }
-
-    return cantidadImpares;
-}
-```
+Crear una nueva condición en `mostrarPistaIndirecta` para mostrar el primer dígito aproximado por rango.
 
 Después:
 
-1. Añadir prototipo.
-2. Aceptar `-4` en `pedirCodigoOComando`.
-3. Mostrar la nueva pista en `mostrarPistaExtra`.
-4. Actualizar textos visibles.
+1. Cambiar el límite de pistas de `3` a `4`.
+2. Actualizar `mostrarMenuTurno`.
+3. Actualizar el cálculo de puntaje.
+4. Probar una partida usando la nueva pista.
 
 ## Registro
 

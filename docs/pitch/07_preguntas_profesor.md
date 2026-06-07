@@ -4,15 +4,19 @@
 
 ### ¿Qué hace tu proyecto?
 
-El jugador debe descubrir un código secreto de tres dígitos diferentes. Después de cada intento incorrecto recibe pistas automáticas. También puede pedir ayudas extra con comandos negativos.
+El jugador debe descubrir un código secreto de cinco dígitos diferentes. Puede pedir ayudas durante la partida, pero esas ayudas bajan su puntaje final.
 
 ### ¿Por qué el juego es de deducción?
 
 Porque cada intento entrega información que ayuda a mejorar el siguiente.
 
+### ¿Qué mejoró en la experiencia del usuario?
+
+Antes todo dependía de comandos. Ahora el jugador ve un menú simple: intentar, revelar, pedir pista o rendirse.
+
 ### ¿Por qué el usuario elige la cantidad de intentos?
 
-Para ajustar la dificultad sin añadir niveles artificiales.
+Porque así decide la dificultad. Elegir más intentos ayuda, pero también baja el puntaje potencial.
 
 ## Estructura
 
@@ -38,15 +42,15 @@ Porque es la forma de entrega solicitada. Las funciones mantienen el orden inter
 
 ### ¿Por qué usaste `do while`?
 
-Porque el menú debe mostrarse al menos una vez.
+Porque el menú principal debe mostrarse al menos una vez.
 
 ### ¿Por qué usaste `while`?
 
-Porque algunas repeticiones dependen de una condición: seguir jugando o seguir recorriendo dígitos.
+Porque algunas repeticiones dependen de una condición: seguir jugando, validar entradas o recorrer dígitos.
 
 ### ¿Por qué usaste `for`?
 
-Porque al comparar posiciones siempre se repite exactamente tres veces.
+Porque al comparar posiciones siempre se repite exactamente cinco veces.
 
 ## Dígitos
 
@@ -55,7 +59,7 @@ Porque al comparar posiciones siempre se repite exactamente tres veces.
 Extrae el último dígito:
 
 ```text
-527 % 10 = 7
+58274 % 10 = 4
 ```
 
 ### ¿Qué hace `/ 10`?
@@ -63,69 +67,83 @@ Extrae el último dígito:
 Elimina el último dígito usando división entera:
 
 ```text
-527 / 10 = 52
+58274 / 10 = 5827
 ```
 
 ### ¿Cómo detectas repeticiones sin arrays?
 
 Extraigo un dígito, corto el número y busco si ese dígito aparece en la parte restante.
 
-### ¿Cómo cuentas bien ubicados?
+### ¿Cómo cuentas lugares exactos?
 
-Comparo el último dígito del secreto con el último del intento y repito tres veces.
+Comparo el último dígito del secreto con el último del intento y repito cinco veces.
 
-### ¿Cómo cuentas mal ubicados?
+### ¿Cómo cuentas dígitos correctos en otro lugar?
 
-Cuento cuántos dígitos existen en el secreto y resto los que ya estaban bien ubicados.
+Cuento cuántos dígitos existen en el secreto y resto los que ya estaban en la posición exacta.
 
 ## UX
 
-### ¿Por qué las pistas básicas son automáticas?
+### ¿Por qué das una ayuda inicial gratis?
 
-Porque son el centro del juego. El jugador necesita esa información después de fallar.
+Porque el código tiene cinco dígitos. Un dato inicial hace que el juego arranque con una pista clara.
 
-### ¿Por qué usas comandos negativos?
+### ¿Por qué las revelaciones bajan puntaje?
 
-Porque no pueden confundirse con códigos válidos de tres dígitos.
+Porque muestran un dígito exacto con posición. Son ayudas fuertes.
 
-### ¿Qué hace `-1`?
+### ¿Por qué las pistas son indirectas?
 
-Muestra la suma de los dígitos.
+Porque ayudan a pensar sin regalar el código.
 
-### ¿Qué hace `-2`?
+### ¿Qué pistas existen?
 
-Muestra cuántos dígitos pares existen.
+Suma de dígitos, cantidad de pares e impares, y si el código es mayor o menor que `50000`.
 
-### ¿Qué hace `-3`?
+### ¿Qué es el desafío final?
 
-Indica si el código es mayor o menor que `500`.
+Es una segunda parte que aparece después de descubrir el código. El jugador debe intercalar pares e impares de mayor a menor.
 
-### ¿Los comandos consumen intentos?
+### Con `58274`, ¿cuál es la clave final?
 
-No. Solo una respuesta válida consume intento.
+```text
+Pares: 8, 4, 2
+Impares: 7, 5
+Clave final: 87452
+```
+
+## Puntaje
+
+### ¿Cómo se calcula el puntaje?
+
+Empieza en `100` y descuenta por intentos elegidos de más, intentos usados, revelaciones, pistas y errores en el desafío final.
+
+### ¿Por qué el puntaje puede ser `0`?
+
+Porque si el jugador no completa el código y el desafío final, la partida no se considera ganada.
 
 ## Traza manual
 
-### Con secreto `527` e intento `572`, ¿qué aparece?
+### Con secreto `58274` e intento `12345`, ¿qué aparece?
 
 ```text
-Bien ubicados: 1
-Correctos en otra posicion: 2
+Acertaste 0 lugares exactos.
+Tienes 3 digitos correctos en otro lugar.
 ```
 
-### ¿Cuánto suman los dígitos de `527`?
+### ¿Cuánto suman los dígitos de `58274`?
 
 ```text
-5 + 2 + 7 = 14
+5 + 8 + 2 + 7 + 4 = 26
 ```
 
-### ¿Cuántos pares tiene `527`?
+### ¿Cuántos pares tiene `58274`?
 
-Uno: el `2`.
+Tres: `8`, `2` y `4`.
 
-### ¿Es válido `551`?
+### ¿Es válido `11234`?
 
-No. El `5` se repite.
+No. El `1` se repite.
 
 ## Preguntas sorpresa
 
@@ -133,14 +151,10 @@ No. El `5` se repite.
 
 El número no cambia. El ciclo revisaría siempre el mismo dígito y podría no terminar.
 
-### ¿Qué cambiarías para añadir una pista de impares?
-
-Reutilizaría el recorrido de `contarDigitosPares`, pero preguntaría:
-
-```cpp
-digito % 2 != 0
-```
-
-### ¿Qué cambiarías para aceptar hasta `30` intentos?
+### ¿Qué cambiarías para permitir 25 intentos?
 
 Cambiaría el límite en `pedirCantidadIntentos`.
+
+### ¿Qué cambiarías para que una pista reste más puntaje?
+
+Cambiaría la resta correspondiente dentro de `calcularPuntaje`.

@@ -2,22 +2,19 @@
 
 ## 1. Objetivo
 
-El jugador debe descubrir un código secreto de tres dígitos diferentes.
+El jugador debe descubrir un código secreto de cinco dígitos diferentes.
 
-Después de cada intento incorrecto, el programa muestra:
-
-- Cuántos dígitos son correctos y están bien ubicados.
-- Cuántos dígitos son correctos, pero están en otra posición.
-
-Si necesita ayuda adicional, el jugador puede usar `-1`, `-2` o `-3`.
+El juego no obliga a jugar de una sola forma. El jugador puede arriesgarse con pocos intentos o pedir ayudas. Al final recibe un puntaje según sus decisiones.
 
 ## 2. Reglas
 
-1. El código tiene exactamente tres dígitos diferentes.
-2. El jugador elige cuántos intentos quiere tener.
-3. Un código inválido no consume intentos.
-4. Un comando de pista extra tampoco consume intentos.
-5. El jugador gana al ingresar exactamente el código secreto.
+1. El código tiene exactamente cinco dígitos diferentes.
+2. El jugador elige entre `5` y `20` intentos.
+3. Al iniciar recibe gratis un dígito con su posición.
+4. Puede pedir hasta `2` revelaciones extra.
+5. Puede pedir hasta `3` pistas indirectas.
+6. Descubrir el código activa un desafío final obligatorio.
+7. El jugador gana solo si completa el desafío final.
 
 ## 3. Organización de `codigo.cpp`
 
@@ -42,7 +39,7 @@ La llamada ejecuta la función:
 sumarDigitos(codigoSecreto)
 ```
 
-La definición contiene su lógica:
+La definición contiene la lógica:
 
 ```cpp
 int sumarDigitos(int numero) {
@@ -76,103 +73,125 @@ Ejemplo:
 
 | Paso | Número antes | Dígito extraído | Número después |
 | :--- | ---: | ---: | ---: |
-| 1 | `527` | `7` | `52` |
-| 2 | `52` | `2` | `5` |
-| 3 | `5` | `5` | `0` |
+| 1 | `58274` | `4` | `5827` |
+| 2 | `5827` | `7` | `582` |
+| 3 | `582` | `2` | `58` |
+| 4 | `58` | `8` | `5` |
+| 5 | `5` | `5` | `0` |
 
-## 5. Funciones de dígitos
+## 5. Funciones principales
 
 | Función | Responsabilidad |
 | :--- | :--- |
-| `tieneTresDigitos` | Comprueba que el número esté entre `100` y `999`. |
+| `tieneCincoDigitos` | Comprueba que el número esté entre `10000` y `99999`. |
 | `existeDigito` | Busca un dígito dentro de un número. |
 | `tieneDigitosRepetidos` | Detecta repeticiones. |
-| `esCodigoValido` | Exige exactamente tres dígitos diferentes. |
-| `contarDigitosBienUbicados` | Compara las tres posiciones. |
+| `esCodigoValido` | Exige cinco dígitos diferentes. |
+| `obtenerDigitoEnPosicion` | Muestra un dígito según su posición de izquierda a derecha. |
+| `contarDigitosBienUbicados` | Compara las cinco posiciones. |
 | `contarDigitosMalUbicados` | Cuenta coincidencias ubicadas en otra posición. |
-| `contarDigitosPares` | Cuenta dígitos divisibles entre `2`. |
-| `sumarDigitos` | Suma todos los dígitos. |
+| `mostrarPistaIndirecta` | Muestra suma, pares/impares o mayor/menor que `50000`. |
+| `calcularClaveFinal` | Intercala pares e impares de mayor a menor. |
+| `calcularPuntaje` | Calcula el resultado final. |
 
-## 6. Ejemplo de las pistas automáticas
+## 6. Ejemplo de intento
 
 Código secreto:
 
 ```text
-527
+58274
 ```
 
 Intento:
 
 ```text
-572
+12345
 ```
 
 Resultado:
 
 ```text
-Bien ubicados: 1
-Correctos en otra posicion: 2
+Acertaste 0 lugares exactos.
+Tienes 3 digitos correctos en otro lugar.
 ```
 
-El `5` está bien ubicado. El `7` y el `2` existen, pero están intercambiados.
+Los dígitos `2`, `4` y `5` existen en el secreto, pero no están en su posición.
 
-## 7. Pistas extra
+## 7. Pistas indirectas
 
-| Comando | Resultado con código `527` |
+| Pista | Resultado con código `58274` |
 | ---: | :--- |
-| `-1` | La suma es `14`. |
-| `-2` | Existe `1` dígito par. |
-| `-3` | El código es mayor que `500`. |
+| `1` | La suma es `26`. |
+| `2` | Tiene `3` pares y `2` impares. |
+| `3` | El código completo es mayor que `50000`. |
 
-Los comandos negativos no pueden confundirse con un código válido.
+Estas pistas ayudan, pero no entregan una posición exacta.
 
-## 8. Elegir códigos secretos
+## 8. Desafío final
+
+Después de descubrir el código, el jugador debe transformarlo.
+
+Ejemplo con `58274`:
+
+```text
+Pares: 8, 4, 2
+Impares: 7, 5
+Clave final: 87452
+```
+
+La regla empieza por pares. Si un grupo se acaba, se agregan los dígitos restantes del otro grupo.
+
+## 9. Puntaje
+
+```text
+puntaje = 100
+puntaje = puntaje - intentos extra elegidos
+puntaje = puntaje - intentos usados
+puntaje = puntaje - ayudas usadas
+puntaje = puntaje - errores del desafio final
+```
+
+Si el jugador no completa el juego, el puntaje es `0`.
+
+## 10. Códigos secretos
 
 La función `elegirCodigoSecreto` alterna cinco códigos predefinidos:
 
 | Partida | Código |
 | ---: | ---: |
-| `1` | `527` |
-| `2` | `731` |
-| `3` | `864` |
-| `4` | `392` |
-| `5` | `615` |
+| `1` | `58274` |
+| `2` | `73619` |
+| `3` | `49186` |
+| `4` | `62735` |
+| `5` | `94382` |
 
 Después vuelve a comenzar.
 
-## 9. Flujo de una partida
+## 11. Flujo de una partida
 
 ```mermaid
 flowchart TD
-    A([Inicio]) --> B[/Elegir cantidad de intentos/]
+    A([Inicio]) --> B[/Elegir intentos/]
     B --> C[Elegir código secreto]
-    C --> D{¿Quedan intentos<br/>y todavía no ganó?}
-    D -- No --> K{¿Ganó?}
-    D -- Sí --> E[/Leer código o comando negativo/]
-    E --> F{¿Es comando?}
-    F -- Sí --> G[Mostrar pista extra]
-    G --> D
-    F -- No --> H[Consumir intento]
+    C --> D[Mostrar ayuda inicial gratis]
+    D --> E{¿Quedan intentos<br/>y no se rindió?}
+    E -- No --> M[/Mostrar resultado y puntaje/]
+    E -- Sí --> F[/Elegir acción/]
+    F --> G{¿Acción?}
+    G -- Intentar --> H[/Leer código/]
     H --> I{¿Adivinó?}
-    I -- Sí --> J[gano = true]
-    I -- No --> L[Mostrar pistas automáticas]
-    J --> D
-    L --> D
-    K -- Sí --> M[/Mostrar victoria/]
-    K -- No --> N[/Mostrar derrota/]
-    M --> O([Fin])
-    N --> O
+    I -- Sí --> J[Resolver desafío final]
+    I -- No --> K[Mostrar respuesta simple]
+    G -- Revelar --> L[Mostrar dígito y posición]
+    G -- Pista --> N[Mostrar pista indirecta]
+    G -- Rendirse --> M
+    J --> M
+    K --> E
+    L --> E
+    N --> E
 ```
 
-## 10. Ciclos usados
-
-| Ciclo | Uso |
-| :--- | :--- |
-| `do while` | Mostrar el menú principal al menos una vez. |
-| `while` | Repetir la partida y recorrer dígitos. |
-| `for` | Comparar exactamente tres posiciones. |
-
-## 11. Compilar
+## 12. Compilar
 
 ```bash
 g++ -std=c++17 -Wall -Wextra -pedantic codigo.cpp -o build/codigo_secreto

@@ -6,19 +6,23 @@
 flowchart TD
     A([Inicio]) --> B[/Elegir intentos/]
     B --> C[Elegir código secreto]
-    C --> D{¿Quedan intentos<br/>y todavía no ganó?}
-    D -- No --> K[Mostrar resultado]
-    D -- Sí --> E[/Leer código o comando/]
-    E --> F{¿Es negativo?}
-    F -- Sí --> G[Mostrar pista extra]
-    G --> D
-    F -- No --> H[Consumir intento]
+    C --> D[Mostrar ayuda inicial]
+    D --> E{¿Quedan intentos<br/>y sigue jugando?}
+    E -- No --> M[Mostrar resultado y puntaje]
+    E -- Sí --> F[/Elegir acción/]
+    F --> G{¿Acción?}
+    G -- Intentar --> H[/Leer código/]
     H --> I{¿Adivinó?}
-    I -- Sí --> J[gano = true]
-    I -- No --> L[Mostrar pistas automáticas]
-    J --> D
-    L --> D
-    K --> M([Fin])
+    I -- Sí --> J[Desafío final]
+    I -- No --> K[Mostrar respuesta simple]
+    G -- Revelar --> L[Mostrar dígito y posición]
+    G -- Pista --> N[Mostrar pista indirecta]
+    G -- Rendirse --> M
+    J --> M
+    K --> E
+    L --> E
+    N --> E
+    M --> O([Fin])
 ```
 
 ## Recorrer dígitos

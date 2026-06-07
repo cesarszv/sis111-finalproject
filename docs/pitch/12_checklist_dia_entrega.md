@@ -11,7 +11,8 @@
 
 - [ ] Abrir `codigo.cpp`.
 - [ ] Compilar sin errores.
-- [ ] Probar `572`, `-1` y `527`.
+- [ ] Probar `58274` y `87452`.
+- [ ] Probar una pista y una revelación.
 - [ ] Leer [`11_resumen_ultima_hora.md`](11_resumen_ultima_hora.md).
 
 ## Durante la modificación

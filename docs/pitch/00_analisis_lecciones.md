@@ -19,7 +19,7 @@ El proceso se repite mientras queden intentos.
 | :--- | :--- |
 | `do while` | Mostrar menú al menos una vez. |
 | `while` | Repetir validaciones y turnos. |
-| `for` | Comparar exactamente tres posiciones. |
+| `for` | Comparar exactamente cinco posiciones. |
 
 ## 3. Dominar dígitos
 

@@ -20,26 +20,54 @@ MIENTRAS opción != 3
 ```text
 pedir cantidad de intentos
 elegir código secreto
+mostrar ayuda inicial gratis
 intentosUsados = 0
+revelacionesUsadas = 0
+pistasPedidas = 0
 gano = falso
 
-MIENTRAS quedan intentos Y no ganó
-    leer código o comando
+MIENTRAS quedan intentos Y no ganó Y no se rindió
+    mostrar menú de turno
+    leer opción
 
-    SI el valor es negativo
-        mostrar pista extra
-    SINO
+    SI opción == intentar
+        leer código
         consumir intento
 
         SI adivinó
-            gano = verdadero
+            resolver desafío final
         SINO
-            mostrar pistas automáticas
+            mostrar lugares exactos y dígitos en otro lugar
         FIN SI
+    SINO SI opción == revelar
+        mostrar dígito con posición
+    SINO SI opción == pista
+        mostrar pista indirecta
+    SINO
+        rendirse
     FIN SI
 FIN MIENTRAS
 
-mostrar victoria o derrota
+calcular puntaje
+mostrar resultado
+```
+
+## Desafío final
+
+```text
+claveFinal = intercalar pares e impares de mayor a menor
+errores = 0
+completo = falso
+
+MIENTRAS errores < 2 Y no completo
+    leer intento final
+
+    SI intento final == claveFinal
+        completo = verdadero
+    SINO
+        errores = errores + 1
+    FIN SI
+FIN MIENTRAS
 ```
 
 ## Recorrer dígitos

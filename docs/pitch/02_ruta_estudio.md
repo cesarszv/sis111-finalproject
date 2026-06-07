@@ -7,8 +7,10 @@
 - Diferencia entre `=`, `==`, `&&` y `||`.
 - Uso de `do while`, `while` y `for`.
 - Uso de `% 10` y `/ 10`.
-- Cálculo de las pistas automáticas.
-- Comandos `-1`, `-2` y `-3`.
+- Validación de cinco dígitos diferentes.
+- Menú de turno: intentar, revelar, pedir pista o rendirse.
+- Cálculo del puntaje.
+- Desafío final.
 
 ## Plan
 
