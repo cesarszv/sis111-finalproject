@@ -1,5 +1,4 @@
 // proyecto final de introduccion a la programacion.
-// juego simple con logica y bucles.
 #include <iostream>
 
 using namespace std;
