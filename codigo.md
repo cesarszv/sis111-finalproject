@@ -2,46 +2,76 @@
 
 ## 1. Objetivo
 
-El jugador debe descubrir el código secreto `58274`. La partida tiene 10 intentos y el jugador decide si pide ayudas o intenta resolverlo solo.
+El juego consiste en descubrir el código secreto `58274`.
+
+El jugador tiene 10 intentos. Durante la partida puede probar códigos, pedir algunas ayudas o rendirse.
+
+Cuando descubre el código, todavía debe completar un desafío final para ganar el juego completo.
 
 ## 2. Reglas
 
-1. El código secreto tiene cinco dígitos diferentes.
-2. La partida tiene 10 intentos fijos.
-3. La posición `3` se muestra gratis al inicio.
-4. Hay 2 revelaciones exactas opcionales.
-5. Hay 3 pistas suaves opcionales.
-6. Después de descubrir el código hay un desafío final.
-7. El puntaje baja cuando se usan intentos o ayudas.
+1. El código secreto tiene 5 dígitos.
+2. Los dígitos del código no se repiten.
+3. La partida tiene máximo 10 intentos.
+4. Desde el inicio se muestra un dato gratis: la posición `3` vale `2`.
+5. El jugador puede usar 2 revelaciones exactas.
+6. El jugador puede usar 3 pistas suaves.
+7. Después de descubrir el código aparece un desafío final.
+8. El puntaje baja cuando se usan intentos, ayudas o se falla en el desafío final.
 
 ## 3. Organización de `codigo.cpp`
 
+El archivo está organizado de forma simple:
+
 ```text
 1. biblioteca iostream
-2. prototipos
+2. prototipos de funciones
 3. main
-4. funciones esenciales
-5. partida principal
+4. funciones de apoyo
+5. función jugar
 ```
 
-El `main` usa solo `while`, porque es más fácil de leer:
+La idea es que primero se vea qué funciones existen y después se vea cómo trabaja cada una.
+
+El `main` solo controla el menú principal:
 
 ```cpp
-while (opcion != 3) {
+while (opcion != 3 && cin.eof() == false) {
     mostrar menu
     leer opcion
+    ejecutar la opcion elegida
 }
 ```
 
-## 4. Procesar dígitos
+Esto hace que el programa sea fácil de seguir: mientras el jugador no elija salir, el menú se sigue mostrando.
 
-Para extraer el último dígito:
+## 4. Lectura de datos
+
+La función `leerEntero` sirve para leer números de forma más segura.
+
+Si el jugador escribe un número, el programa sigue normal.
+
+Si escribe texto, por ejemplo `hola`, el programa muestra un mensaje y no se queda trabado.
+
+```cpp
+if (leerEntero(opcion) == false) {
+    continue;
+}
+```
+
+Esto evita errores comunes cuando se usa `cin`.
+
+## 5. Procesar dígitos
+
+El juego trabaja con números de 5 dígitos. Para revisar esos dígitos se usan divisiones y módulos.
+
+Para obtener el último dígito:
 
 ```cpp
 digito = numero % 10;
 ```
 
-Para eliminar el último dígito:
+Para quitar el último dígito:
 
 ```cpp
 numero = numero / 10;
@@ -57,35 +87,65 @@ Ejemplo:
 | 4 | `58` | `8` | `5` |
 | 5 | `5` | `5` | `0` |
 
-## 5. Funciones esenciales
+También existe la función `obtenerDigitoEnPosicion`, que permite pedir un dígito por su posición.
 
-| Función | Responsabilidad |
+Por ejemplo, en `58274`, la posición `3` es `2`.
+
+## 6. Funciones principales
+
+| Función | Qué hace |
 | :--- | :--- |
-| `mostrarReglas` | Muestra instrucciones simples. |
-| `obtenerDigitoEnPosicion` | Devuelve un dígito por posición. |
-| `existeDigito` | Busca un dígito dentro del número. |
-| `contarLugaresExactos` | Cuenta dígitos correctos en el mismo lugar. |
-| `contarCorrectosEnOtroLugar` | Cuenta dígitos correctos pero movidos. |
-| `sumarDigitos` | Calcula la pista de suma. |
-| `contarPares` | Calcula la pista de pares e impares. |
-| `ordenarAscendente` | Prepara el número para el desafío final. |
-| `calcularClaveFinal` | Intercala pares e impares de mayor a menor. |
-| `calcularPuntaje` | Calcula el puntaje final. |
+| `mostrarReglas` | Muestra las reglas del juego. |
 | `jugar` | Controla toda la partida. |
+| `leerEntero` | Lee un número y evita errores con texto. |
+| `obtenerDigitoEnPosicion` | Devuelve un dígito según su posición. |
+| `existeDigito` | Revisa si un dígito está dentro de un número. |
+| `tieneCincoDigitos` | Revisa que el intento tenga 5 dígitos. |
+| `tieneDigitosDiferentes` | Revisa que no haya dígitos repetidos. |
+| `intentoEsValido` | Une las validaciones del intento. |
+| `contarLugaresExactos` | Cuenta dígitos correctos en el mismo lugar. |
+| `contarCorrectosEnOtroLugar` | Cuenta dígitos correctos pero en otra posición. |
+| `sumarDigitos` | Calcula la pista de la suma. |
+| `contarPares` | Calcula cuántos dígitos pares hay. |
+| `calcularClaveFinal` | Calcula la clave del desafío final. |
+| `calcularPuntaje` | Calcula el puntaje final. |
 
-## 6. Validación del intento
+## 7. Validación del intento
 
-No hay una función separada para validar. La validación está dentro de `jugar`, porque así se entiende mejor:
+Un intento solo es válido si cumple dos condiciones:
+
+1. Tiene 5 dígitos.
+2. No repite dígitos.
+
+Por eso existe esta función:
 
 ```cpp
-if (intento < 10000 || intento > 99999) {
-    codigoValido = false;
-}
+bool intentoEsValido(int intento)
 ```
 
-También se comparan los cinco dígitos entre sí para evitar repetidos.
+La validación se separó para que `jugar` no tenga demasiadas instrucciones juntas.
 
-## 7. Ejemplo de intento
+Así es más fácil explicar el programa:
+
+```text
+primero leo el intento
+después reviso si es válido
+si es válido, cuenta como intento
+si no es válido, no cuenta como intento
+```
+
+## 8. Respuesta después de un intento
+
+Cuando el jugador prueba un código, el programa compara ese intento con el código secreto.
+
+El programa muestra dos datos:
+
+```text
+lugares exactos
+dígitos correctos en otro lugar
+```
+
+Ejemplo:
 
 Código secreto:
 
@@ -106,9 +166,40 @@ lugares exactos, 0
 digitos correctos en otro lugar, 3
 ```
 
-## 8. Desafío final
+Esto pasa porque los dígitos `2`, `4` y `5` sí están en el código, pero están en otras posiciones.
 
-Ejemplo con `58274`:
+## 9. Ayudas
+
+El juego tiene dos tipos de ayuda.
+
+Las revelaciones muestran un dato exacto:
+
+```text
+posición 1 = 5
+posición 5 = 4
+```
+
+Las pistas suaves dan información general:
+
+```text
+suma de dígitos = 26
+hay 3 pares y 2 impares
+el código es mayor que 50000
+```
+
+Estas ayudas no gastan intentos, pero sí bajan el puntaje si el jugador gana.
+
+## 10. Desafío final
+
+Después de descubrir `58274`, el jugador debe formar una clave final.
+
+La regla es:
+
+```text
+mayor par, mayor impar, siguiente par, siguiente impar
+```
+
+Con `58274`:
 
 ```text
 Pares: 8, 4, 2
@@ -116,23 +207,44 @@ Impares: 7, 5
 Clave final: 87452
 ```
 
-Esta parte se basa en la lección de intercalar pares e impares.
+La función `calcularClaveFinal` hace esto buscando dígitos desde los mayores hacia los menores.
 
-## 9. Puntaje
+No usa arreglos. Solo usa números, condiciones y bucles.
+
+## 11. Puntaje
+
+El puntaje empieza en `100`.
+
+Si el jugador no gana el juego completo, el puntaje final es `0`.
+
+Si gana, se descuentan puntos por:
 
 ```text
-puntaje = 100
-puntaje = puntaje - intentos usados
-puntaje = puntaje - revelaciones usadas
-puntaje = puntaje - pistas usadas
-puntaje = puntaje - errores del desafio final
+intentos usados
+revelaciones usadas
+pistas usadas
+errores en el desafío final
 ```
 
-Si el jugador no completa el juego, el puntaje es `0`.
+En el código, esos descuentos se aplican así:
 
-## 10. Compilar
+```text
+4 puntos por cada intento usado
+12 puntos por cada revelación usada
+8 puntos por cada pista usada
+10 puntos por cada error en el desafío final
+```
+
+## 12. Compilar y ejecutar
+
+Para compilar:
 
 ```bash
 g++ -std=c++17 -Wall -Wextra -pedantic codigo.cpp -o build/codigo_secreto
+```
+
+Para ejecutar:
+
+```bash
 ./build/codigo_secreto
 ```

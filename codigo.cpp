@@ -3,23 +3,28 @@
 
 using namespace std;
 
-// funciones esenciales del juego.
+// funciones principales.
 void mostrarReglas();
+void jugar();
+
+// funciones de apoyo.
+bool leerEntero(int &numero);
 int obtenerDigitoEnPosicion(int numero, int posicion);
 bool existeDigito(int numero, int digitoBuscado);
+bool tieneCincoDigitos(int numero);
+bool tieneDigitosDiferentes(int numero);
+bool intentoEsValido(int intento);
 int contarLugaresExactos(int codigoSecreto, int intento);
 int contarCorrectosEnOtroLugar(int codigoSecreto, int intento);
 int sumarDigitos(int numero);
 int contarPares(int numero);
-int ordenarAscendente(int numero);
 int calcularClaveFinal(int codigoSecreto);
 int calcularPuntaje(int intentosUsados, int revelacionesUsadas, int pistasUsadas, int erroresDesafio, bool gano);
-void jugar();
 
 int main() {
     int opcion = 0;
 
-    while (opcion != 3) {
+    while (opcion != 3 && cin.eof() == false) {
         cout << "\n========================================\n";
         cout << "              CODIGO SECRETO\n";
         cout << "========================================\n";
@@ -27,7 +32,11 @@ int main() {
         cout << "2. ver reglas\n";
         cout << "3. salir\n";
         cout << "opcion: ";
-        cin >> opcion;
+
+        opcion = 0;
+        if (leerEntero(opcion) == false) {
+            continue;
+        }
 
         if (opcion == 1) {
             jugar();
@@ -50,7 +59,23 @@ void mostrarReglas() {
     cout << "dato gratis, posicion 3 = 2.\n";
     cout << "ayudas, 2 revelaciones y 3 pistas suaves.\n";
     cout << "puntaje, baja si usas intentos o ayudas.\n";
-    cout << "final, intercalar pares e impares de mayor a menor.\n";
+    cout << "final, arma una clave alternando pares e impares de mayor a menor.\n";
+}
+
+bool leerEntero(int &numero) {
+    if (cin >> numero) {
+        return true;
+    }
+
+    if (cin.eof()) {
+        return false;
+    }
+
+    cin.clear();
+    cin.ignore(1000, '\n');
+    cout << "\nentrada invalida, escribe solo numeros.\n";
+
+    return false;
 }
 
 int obtenerDigitoEnPosicion(int numero, int posicion) {
@@ -78,19 +103,50 @@ bool existeDigito(int numero, int digitoBuscado) {
     return encontrado;
 }
 
+bool tieneCincoDigitos(int numero) {
+    return numero >= 10000 && numero <= 99999;
+}
+
+bool tieneDigitosDiferentes(int numero) {
+    int d1 = obtenerDigitoEnPosicion(numero, 1);
+    int d2 = obtenerDigitoEnPosicion(numero, 2);
+    int d3 = obtenerDigitoEnPosicion(numero, 3);
+    int d4 = obtenerDigitoEnPosicion(numero, 4);
+    int d5 = obtenerDigitoEnPosicion(numero, 5);
+    bool diferentes = true;
+
+    if (d1 == d2 || d1 == d3 || d1 == d4 || d1 == d5 ||
+        d2 == d3 || d2 == d4 || d2 == d5 ||
+        d3 == d4 || d3 == d5 ||
+        d4 == d5) {
+        diferentes = false;
+    }
+
+    return diferentes;
+}
+
+bool intentoEsValido(int intento) {
+    bool valido = true;
+
+    if (tieneCincoDigitos(intento) == false) {
+        valido = false;
+    } else if (tieneDigitosDiferentes(intento) == false) {
+        valido = false;
+    }
+
+    return valido;
+}
+
 int contarLugaresExactos(int codigoSecreto, int intento) {
     int exactos = 0;
 
-    for (int i = 1; i <= 5; i++) {
-        int digitoSecreto = codigoSecreto % 10;
-        int digitoIntento = intento % 10;
+    for (int posicion = 1; posicion <= 5; posicion++) {
+        int digitoSecreto = obtenerDigitoEnPosicion(codigoSecreto, posicion);
+        int digitoIntento = obtenerDigitoEnPosicion(intento, posicion);
 
         if (digitoSecreto == digitoIntento) {
             exactos++;
         }
-
-        codigoSecreto = codigoSecreto / 10;
-        intento = intento / 10;
     }
 
     return exactos;
@@ -100,14 +156,12 @@ int contarCorrectosEnOtroLugar(int codigoSecreto, int intento) {
     int existentes = 0;
     int exactos = contarLugaresExactos(codigoSecreto, intento);
 
-    for (int i = 1; i <= 5; i++) {
-        int digito = intento % 10;
+    for (int posicion = 1; posicion <= 5; posicion++) {
+        int digito = obtenerDigitoEnPosicion(intento, posicion);
 
         if (existeDigito(codigoSecreto, digito)) {
             existentes++;
         }
-
-        intento = intento / 10;
     }
 
     return existentes - exactos;
@@ -140,55 +194,28 @@ int contarPares(int numero) {
     return pares;
 }
 
-int ordenarAscendente(int numero) {
-    int copia = numero;
-    int nuevoNumero = 0;
-
-    for (int buscado = 0; buscado <= 9; buscado++) {
-        numero = copia;
-
-        while (numero > 0) {
-            int digito = numero % 10;
-            numero = numero / 10;
-
-            if (digito == buscado) {
-                nuevoNumero = nuevoNumero * 10 + digito;
-            }
-        }
-    }
-
-    return nuevoNumero;
-}
-
 int calcularClaveFinal(int codigoSecreto) {
-    int numeroOrdenado = ordenarAscendente(codigoSecreto);
-    int copiaPar = numeroOrdenado;
-    int copiaImpar = numeroOrdenado;
     int claveFinal = 0;
+    int parBuscado = 8;
+    int imparBuscado = 9;
 
-    while (copiaPar > 0 || copiaImpar > 0) {
-        bool encontre = false;
-
-        while (copiaPar > 0 && encontre == false) {
-            int digito = copiaPar % 10;
-            copiaPar = copiaPar / 10;
-
-            if (digito % 2 == 0) {
-                claveFinal = claveFinal * 10 + digito;
-                encontre = true;
-            }
+    while (parBuscado >= 0 || imparBuscado >= 1) {
+        while (parBuscado >= 0 && existeDigito(codigoSecreto, parBuscado) == false) {
+            parBuscado = parBuscado - 2;
         }
 
-        encontre = false;
+        if (parBuscado >= 0) {
+            claveFinal = claveFinal * 10 + parBuscado;
+            parBuscado = parBuscado - 2;
+        }
 
-        while (copiaImpar > 0 && encontre == false) {
-            int digito = copiaImpar % 10;
-            copiaImpar = copiaImpar / 10;
+        while (imparBuscado >= 1 && existeDigito(codigoSecreto, imparBuscado) == false) {
+            imparBuscado = imparBuscado - 2;
+        }
 
-            if (digito % 2 != 0) {
-                claveFinal = claveFinal * 10 + digito;
-                encontre = true;
-            }
+        if (imparBuscado >= 1) {
+            claveFinal = claveFinal * 10 + imparBuscado;
+            imparBuscado = imparBuscado - 2;
         }
     }
 
@@ -215,9 +242,11 @@ int calcularPuntaje(int intentosUsados, int revelacionesUsadas, int pistasUsadas
 }
 
 void jugar() {
-    // datos fijos de la partida.
-    int codigoSecreto = 58274;
-    int intentosMaximos = 10;
+    const int codigoSecreto = 58274;
+    const int intentosMaximos = 10;
+    const int revelacionesMaximas = 2;
+    const int pistasMaximas = 3;
+
     int intentosUsados = 0;
     int revelacionesUsadas = 0;
     int pistasUsadas = 0;
@@ -232,54 +261,37 @@ void jugar() {
     cout << "encuentra el codigo secreto.\n";
     cout << "dato gratis, posicion 3 = 2.\n";
 
-    while (intentosUsados < intentosMaximos && encontroCodigo == false && rendirse == false) {
+    while (intentosUsados < intentosMaximos &&
+           encontroCodigo == false &&
+           rendirse == false &&
+           cin.eof() == false) {
         int opcion = 0;
 
-        // menu del turno.
         cout << "\n----------------------------------------\n";
         cout << "turno, " << intentosUsados + 1 << " de " << intentosMaximos << "\n";
         cout << "dato fijo, posicion 3 = 2\n";
-        cout << "revelaciones disponibles, " << 2 - revelacionesUsadas << "\n";
-        cout << "pistas disponibles, " << 3 - pistasUsadas << "\n";
+        cout << "revelaciones disponibles, " << revelacionesMaximas - revelacionesUsadas << "\n";
+        cout << "pistas disponibles, " << pistasMaximas - pistasUsadas << "\n";
         cout << "----------------------------------------\n";
         cout << "1. probar codigo\n";
         cout << "2. revelar dato exacto\n";
         cout << "3. pedir pista suave\n";
         cout << "4. rendirme\n";
         cout << "opcion: ";
-        cin >> opcion;
+
+        if (leerEntero(opcion) == false) {
+            continue;
+        }
 
         if (opcion == 1) {
-            // validacion directa del intento.
             int intento = 0;
-            int d1 = 0;
-            int d2 = 0;
-            int d3 = 0;
-            int d4 = 0;
-            int d5 = 0;
-            bool codigoValido = true;
 
             cout << "\ningresa tu codigo: ";
-            cin >> intento;
-
-            d1 = obtenerDigitoEnPosicion(intento, 1);
-            d2 = obtenerDigitoEnPosicion(intento, 2);
-            d3 = obtenerDigitoEnPosicion(intento, 3);
-            d4 = obtenerDigitoEnPosicion(intento, 4);
-            d5 = obtenerDigitoEnPosicion(intento, 5);
-
-            if (intento < 10000 || intento > 99999) {
-                codigoValido = false;
+            if (leerEntero(intento) == false) {
+                continue;
             }
 
-            if (d1 == d2 || d1 == d3 || d1 == d4 || d1 == d5 ||
-                d2 == d3 || d2 == d4 || d2 == d5 ||
-                d3 == d4 || d3 == d5 ||
-                d4 == d5) {
-                codigoValido = false;
-            }
-
-            if (codigoValido == false) {
+            if (intentoEsValido(intento) == false) {
                 cout << "codigo invalido, escribe 5 digitos sin repetir.\n";
                 cout << "no cuenta como intento.\n";
             } else {
@@ -339,12 +351,15 @@ void jugar() {
         cout << "========================================\n";
         cout << "encontraste el codigo, " << codigoSecreto << ".\n";
         cout << "forma la clave final.\n";
-        cout << "regla, pares e impares de mayor a menor.\n";
+        cout << "regla, mayor par, mayor impar, siguiente par, siguiente impar.\n";
         cout << "tienes 2 oportunidades.\n";
 
-        while (erroresDesafio < 2 && gano == false) {
+        while (erroresDesafio < 2 && gano == false && cin.eof() == false) {
             cout << "\nclave final: ";
-            cin >> intentoFinal;
+
+            if (leerEntero(intentoFinal) == false) {
+                continue;
+            }
 
             if (intentoFinal == claveFinal) {
                 gano = true;
