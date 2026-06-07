@@ -8,6 +8,10 @@
 		}
 	],
 	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "final_project"
+		"liveServer.settings.multiRootWorkspaceName": "final_project",
+		"explorer.fileNesting.patterns": {
+			"sis111-finalproject.code-workspace": "AGENTS.md, README.md, .gitignore",
+			"codigo.cpp": "codigo.md"
+		}
 	}
 }

@@ -46,14 +46,12 @@ int main() {
 
 void mostrarReglas() {
     cout << "\n------------- reglas -------------\n";
-    cout << "el codigo secreto tiene 5 digitos diferentes.\n";
-    cout << "tienes 10 intentos para descubrirlo.\n";
-    cout << "desde el inicio sabes que la posicion 3 es 2.\n";
-    cout << "puedes revelar 2 datos exactos mas.\n";
-    cout << "puedes pedir 3 pistas suaves.\n";
-    cout << "usar ayudas baja tu puntaje.\n";
-    cout << "cuando descubras el codigo hay un desafio final.\n";
-    cout << "debes intercalar pares e impares de mayor a menor.\n";
+    cout << "codigo, 5 digitos diferentes.\n";
+    cout << "intentos, 10.\n";
+    cout << "dato gratis, posicion 3 = 2.\n";
+    cout << "ayudas, 2 revelaciones y 3 pistas suaves.\n";
+    cout << "puntaje, baja si usas intentos o ayudas.\n";
+    cout << "final, intercalar pares e impares de mayor a menor.\n";
 }
 
 int obtenerDigitoEnPosicion(int numero, int posicion) {
@@ -218,6 +216,7 @@ int calcularPuntaje(int intentosUsados, int revelacionesUsadas, int pistasUsadas
 }
 
 void jugar() {
+    // datos fijos de la partida.
     int codigoSecreto = 58274;
     int intentosMaximos = 10;
     int intentosUsados = 0;
@@ -231,16 +230,18 @@ void jugar() {
     cout << "\n========================================\n";
     cout << "              nueva partida\n";
     cout << "========================================\n";
-    cout << "codigo secreto, 5 digitos diferentes.\n";
-    cout << "dato gratis, posicion 3 es 2.\n";
+    cout << "encuentra el codigo secreto.\n";
+    cout << "dato gratis, posicion 3 = 2.\n";
 
     while (intentosUsados < intentosMaximos && encontroCodigo == false && rendirse == false) {
         int opcion = 0;
 
+        // menu del turno.
         cout << "\n----------------------------------------\n";
-        cout << "intentos, " << intentosUsados << " de " << intentosMaximos << "\n";
-        cout << "revelaciones usadas, " << revelacionesUsadas << " de 2\n";
-        cout << "pistas usadas, " << pistasUsadas << " de 3\n";
+        cout << "turno, " << intentosUsados + 1 << " de " << intentosMaximos << "\n";
+        cout << "dato fijo, posicion 3 = 2\n";
+        cout << "revelaciones disponibles, " << 2 - revelacionesUsadas << "\n";
+        cout << "pistas disponibles, " << 3 - pistasUsadas << "\n";
         cout << "----------------------------------------\n";
         cout << "1. probar codigo\n";
         cout << "2. revelar dato exacto\n";
@@ -250,6 +251,7 @@ void jugar() {
         cin >> opcion;
 
         if (opcion == 1) {
+            // validacion directa del intento.
             int intento = 0;
             int d1 = 0;
             int d2 = 0;
@@ -279,7 +281,8 @@ void jugar() {
             }
 
             if (codigoValido == false) {
-                cout << "ese codigo no sirve, debe tener 5 digitos diferentes.\n";
+                cout << "codigo invalido, escribe 5 digitos sin repetir.\n";
+                cout << "no cuenta como intento.\n";
             } else {
                 intentosUsados++;
 
@@ -287,18 +290,19 @@ void jugar() {
                     encontroCodigo = true;
                 } else {
                     cout << "\nrespuesta\n";
-                    cout << "lugares exactos, " << contarLugaresExactos(codigoSecreto, intento) << "\n";
+                    cout << "lugares exactos, ";
+                    cout << contarLugaresExactos(codigoSecreto, intento) << "\n";
                     cout << "digitos correctos en otro lugar, ";
                     cout << contarCorrectosEnOtroLugar(codigoSecreto, intento) << "\n";
                 }
             }
         } else if (opcion == 2) {
             if (revelacionesUsadas == 0) {
-                cout << "\ndato exacto, posicion 1 es ";
+                cout << "\ndato exacto, posicion 1 = ";
                 cout << obtenerDigitoEnPosicion(codigoSecreto, 1) << ".\n";
                 revelacionesUsadas++;
             } else if (revelacionesUsadas == 1) {
-                cout << "\ndato exacto, posicion 5 es ";
+                cout << "\ndato exacto, posicion 5 = ";
                 cout << obtenerDigitoEnPosicion(codigoSecreto, 5) << ".\n";
                 revelacionesUsadas++;
             } else {
@@ -306,16 +310,16 @@ void jugar() {
             }
         } else if (opcion == 3) {
             if (pistasUsadas == 0) {
-                cout << "\npista suave, la suma de los digitos es ";
+                cout << "\npista 1, suma de digitos = ";
                 cout << sumarDigitos(codigoSecreto) << ".\n";
                 pistasUsadas++;
             } else if (pistasUsadas == 1) {
                 int pares = contarPares(codigoSecreto);
-                cout << "\npista suave, hay " << pares << " pares y ";
+                cout << "\npista 2, hay " << pares << " pares y ";
                 cout << 5 - pares << " impares.\n";
                 pistasUsadas++;
             } else if (pistasUsadas == 2) {
-                cout << "\npista suave, el codigo es mayor que 50000.\n";
+                cout << "\npista 3, el codigo es mayor que 50000.\n";
                 pistasUsadas++;
             } else {
                 cout << "\nya no tienes pistas.\n";
@@ -335,7 +339,8 @@ void jugar() {
         cout << "              desafio final\n";
         cout << "========================================\n";
         cout << "encontraste el codigo, " << codigoSecreto << ".\n";
-        cout << "ahora intercala pares e impares de mayor a menor.\n";
+        cout << "forma la clave final.\n";
+        cout << "regla, pares e impares de mayor a menor.\n";
         cout << "tienes 2 oportunidades.\n";
 
         while (erroresDesafio < 2 && gano == false) {
