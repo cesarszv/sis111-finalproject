@@ -1,4 +1,8 @@
-# Explicación del juego Código Secreto
+# Código Secreto
+
+- Cesar Sebastian Zambrana Ventura
+- Universidad Catolica Boliviana "San Pablo", sede Santa Cruz de la Sierra
+- Introducción a la Programación 2026
 
 ## 1. Objetivo
 
@@ -80,12 +84,12 @@ numero = numero / 10;
 Ejemplo:
 
 | Paso | Número antes | Dígito extraído | Número después |
-| :--- | ---: | ---: | ---: |
-| 1 | `58274` | `4` | `5827` |
-| 2 | `5827` | `7` | `582` |
-| 3 | `582` | `2` | `58` |
-| 4 | `58` | `8` | `5` |
-| 5 | `5` | `5` | `0` |
+| :--- | -----------: | --------------: | -------------: |
+| 1    |      `58274` |             `4` |         `5827` |
+| 2    |       `5827` |             `7` |          `582` |
+| 3    |        `582` |             `2` |           `58` |
+| 4    |         `58` |             `8` |            `5` |
+| 5    |          `5` |             `5` |            `0` |
 
 También existe la función `obtenerDigitoEnPosicion`, que permite pedir un dígito por su posición.
 
@@ -93,22 +97,22 @@ Por ejemplo, en `58274`, la posición `3` es `2`.
 
 ## 6. Funciones principales
 
-| Función | Qué hace |
-| :--- | :--- |
-| `mostrarReglas` | Muestra las reglas del juego. |
-| `jugar` | Controla toda la partida. |
-| `leerEntero` | Lee un número y evita errores con texto. |
-| `obtenerDigitoEnPosicion` | Devuelve un dígito según su posición. |
-| `existeDigito` | Revisa si un dígito está dentro de un número. |
-| `tieneCincoDigitos` | Revisa que el intento tenga 5 dígitos. |
-| `tieneDigitosDiferentes` | Revisa que no haya dígitos repetidos. |
-| `intentoEsValido` | Une las validaciones del intento. |
-| `contarLugaresExactos` | Cuenta dígitos correctos en el mismo lugar. |
+| Función                      | Qué hace                                        |
+| :--------------------------- | :---------------------------------------------- |
+| `mostrarReglas`              | Muestra las reglas del juego.                   |
+| `jugar`                      | Controla toda la partida.                       |
+| `leerEntero`                 | Lee un número y evita errores con texto.        |
+| `obtenerDigitoEnPosicion`    | Devuelve un dígito según su posición.           |
+| `existeDigito`               | Revisa si un dígito está dentro de un número.   |
+| `tieneCincoDigitos`          | Revisa que el intento tenga 5 dígitos.          |
+| `tieneDigitosDiferentes`     | Revisa que no haya dígitos repetidos.           |
+| `intentoEsValido`            | Une las validaciones del intento.               |
+| `contarLugaresExactos`       | Cuenta dígitos correctos en el mismo lugar.     |
 | `contarCorrectosEnOtroLugar` | Cuenta dígitos correctos pero en otra posición. |
-| `sumarDigitos` | Calcula la pista de la suma. |
-| `contarPares` | Calcula cuántos dígitos pares hay. |
-| `calcularClaveFinal` | Calcula la clave del desafío final. |
-| `calcularPuntaje` | Calcula el puntaje final. |
+| `sumarDigitos`               | Calcula la pista de la suma.                    |
+| `contarPares`                | Calcula cuántos dígitos pares hay.              |
+| `calcularClaveFinal`         | Calcula la clave del desafío final.             |
+| `calcularPuntaje`            | Calcula el puntaje final.                       |
 
 ## 7. Validación del intento
 
